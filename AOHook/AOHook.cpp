@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <windows.h>
 #include <stdio.h>
-#include "Detours\detours.h"
+#include <Detours/detours.h>
 
 void*	g_pDataBlockToMessage = NULL;
 
