@@ -1,12 +1,12 @@
-ClickSaver 2.3.5
+ClickSaver 2.4.0
 ================
 
 Update by Uragon for the 18.1 Anarchy Online patch (database changes)
 and for 18.4 (new input system).
 
-update by darkbane for 16.3
+Update by darkbane for 16.3
 
-by Gnarf
+Update by Gnarf
 gnarf@gnarf.net
 http://clicksaver.notumwars.com/
 
@@ -15,7 +15,7 @@ a.chavasse@free.fr
 http://a.chavasse.free.fr/ClickSaver
 
 Some parts are from AOMD 1.4 by Muzzleflash.
-DLL patching done using madshi's madCodeHookLib.
+DLL patching done using Microsofts Detours.
 
 Description
 -----------
@@ -37,7 +37,7 @@ compresses packets, which is enabled in some zones (like Newland).
 
 However, there's still the possibility (and it's even probable)
 that because of some bugs, or possible  incompatibilities between
-the dll patching api (madCodeHook) and some versions of windows.
+the dll patching api (Detours) and some versions of windows.
 However, if AOMD never worked for you, have a try at this one :)
 
 Downside is that it's not possible anymore to run it on a different
@@ -50,7 +50,7 @@ isn't that useful :p)
 Installation
 ------------
 There's pretty much nothing needed to install CLickSaver itself.
-Just copy it somewhere. The two DLLs (AOHook.dll and madCodeHookLib.dll)
+Just copy it somewhere. The two DLLs (ctreestd.dll, libdb40.dll and AOHook.dll)
 must be in the same directory as ClickSaver.exe itself.
 (it's recommended to put it all in it's own directory though)
 

@@ -412,12 +412,12 @@ PUU32 g_GUIDef[]=
 
 // **** Options tab ****
     PU_ACTION_OBJDEF, CS_OPTIONS_TAB, ( PUU32 )"VerGroup", 0,
-        PUM_ADDCHILD, PU_TITLE( "ClickSaver "CS_VERSION),
+        PUM_ADDCHILD, PU_TITLE( "ClickSaver "CS_VERSION ),
         PUM_ADDCHILD, PU_LABEL( "Originally by MORB, Updates by Gnarf, Darkbane & Uragon" ),
         PUM_ADDCHILD, PU_LABEL( "http://www.ao-universe.com/main.php?site=tools&link=download&action=tools" ),
         PUM_ADDCHILD, PU_LABEL( " " ),
         PUM_ADDCHILD, PU_LABEL( "Some parts are from AOMD 1.4 by Muzzleflash" ),
-        PUM_ADDCHILD, PU_LABEL( "DLL hooking done using Madshi's madCodeHook" ),
+        PUM_ADDCHILD, PU_LABEL( "DLL hooking done Microsoft Detours" ),
         PUM_ADDCHILD, PU_TITLE( "Special thanks to:" ),
         PUM_ADDCHILD, PU_LABEL( "First Order (http://www.firstorder.net)" ),
         PUM_ADDCHILD, PU_LABEL( "All the helpful people on HQ forums" ),
