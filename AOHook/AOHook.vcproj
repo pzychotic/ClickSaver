@@ -49,7 +49,6 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../madCodeHookLibL/Dll"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;AOHOOK_EXPORTS"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -168,7 +167,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../AOHook.dll"
+				OutputFile=".\Debug/AOHook.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"

@@ -44,6 +44,7 @@
 ClickSaver -  Anarchy Online mission helper
 Copyright (C) 2001, 2002 Morb
 Some parts Copyright (C) 2003, 2004 gnarf
+Some parts Copyright (C) 2012 Darkbane, Adjuster
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -93,9 +94,7 @@ extern PUU32 g_GUIDef[];
 pusObjectCollection* g_pCol;
 PULID g_ItemWatchList, g_LocWatchList, g_MainWin;
 
-
 void _setSliders(int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp);
-
 
 PUU32 g_BuyingAgentCount = 0;
 PUU32 g_BuyingAgentMissions = 0;
@@ -110,23 +109,16 @@ char g_CSDir[256] = "";
 
 HANDLE g_Mutex = INVALID_HANDLE_VALUE;
 HANDLE g_Thread = INVALID_HANDLE_VALUE;
-DWORD WINAPI HookManagerThread( void *pParam );
+DWORD WINAPI HookManagerThread(void *pParam);
 
 DB* g_pDB = NULL;
 
-
 typedef enum ImportSettingsMode {
-
 	ISM_CONFIG,
-
 	ISM_LOCWATCH,
-
 	ISM_ITEMWATCH,
-
 	ISM_SLIDERS,
-
 	ISM_DONE,
-
 } ImportSettingsMode;
 
 
@@ -200,7 +192,6 @@ int main( int argc, char** argv )
 
 	fclose( fp );
 
-
 	/* Check if local database is up to date */
 	hLocalDB = CreateFile( "AODatabase.bdb", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
 
@@ -244,7 +235,6 @@ int main( int argc, char** argv )
 		if (pAppMsg->Message == CSAM_OK )
 		{
 
-
 			puSetAttribute( puGetObjectFromCollection( g_pCol, CS_CREATINGDBMSGBOX ), PUA_WINDOW_OPENED, TRUE );
 			puCheckMessages();
 
@@ -267,7 +257,6 @@ int main( int argc, char** argv )
 		}
 
 	}
-
 
 	// Create Berkeley DB handle
 	if( db_create( &g_pDB, NULL, 0 ) )
@@ -406,7 +395,7 @@ int main( int argc, char** argv )
 						WriteLog(NULL);
 
 						// Find AO window
-						if( !( AOWnd = FindWindow( "Anarchy client", "Anarchy Online" ) ) )
+						if( !( AOWnd = FindWindow( "Anarchy client", NULL ) ) )
 						{
 							DisplayErrorMessage( "Anarchy Online is not running.", TRUE );
 							g_BuyingAgentCount = 0;
@@ -623,11 +612,7 @@ int main( int argc, char** argv )
 
 					int money_xp = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP), PUA_TEXTENTRY_VALUE );
 
-					
-
 					_setSliders(easy_hard, good_bad, order_chaos, open_hidden, phys_myst, headon_stealth, money_xp);
-
-					
 
 				}
 
@@ -760,7 +745,6 @@ void ImportSettings(char *filename)
 		puDoMethod( g_ItemWatchList, PUM_TABLE_REMRECORD, Record, 0 );
 		Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
 	}
-	
 	
 	if( !( fp = fopen( filename, "r" ) ) )
 		return;
@@ -896,8 +880,6 @@ void ImportSettings(char *filename)
 					puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB), PUA_CHECKBOX_CHECKED, (Val & 0x04 ? TRUE : FALSE));
 					break;
 
-
-
 				case CFG_SLIDER_EASY_HARD:
 				case CFG_SLIDER_GOOD_BAD:
 				case CFG_SLIDER_ORDER_CHAOS:
@@ -923,7 +905,6 @@ void ImportSettings(char *filename)
 						puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL), PUA_CHECKBOX_CHECKED, d );
 					}
 					break;
-
 
 				}
 			}
@@ -962,7 +943,6 @@ void ImportSettings(char *filename)
 			break;
 
 		}
-		
 		
 	}
 	
@@ -1045,10 +1025,6 @@ void ExportSettings(char *filename)
 
 	fprintf( fp, "HIGHLIGHTOPTS::%d\n", Val);
 
-
-
-	
-
 	fprintf( fp, "SLIDER_EASY_HARD::%d\n",
 		puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD), PUA_TEXTENTRY_VALUE ) );
 
@@ -1079,7 +1055,6 @@ void ExportSettings(char *filename)
 		puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE), PUA_CHECKBOX_CHECKED ),
 		puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL), PUA_CHECKBOX_CHECKED ));
 
-
 	fprintf(fp, "::ItemWatch::\n");
 		Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
 		while( Record )
@@ -1099,7 +1074,6 @@ void ExportSettings(char *filename)
 			Record = puDoMethod( g_LocWatchList, PUM_TABLE_GETNEXTRECORD, Record, 0 );
 		}
 	fprintf(fp, "::END::\n");
-
 
 	fclose( fp );
 
@@ -1163,13 +1137,11 @@ BOOL GetFile(HWND hWndOwner, BOOL saving, char *buffer, int buffersize)
 	ofn.lpstrInitialDir=ofn.lpstrFileTitle=NULL;
 	ofn.nMaxFileTitle=0;
 
-
 	/* Prompt user for folder */
 	if (saving)
 		return GetSaveFileName(&ofn);
 	else
 		return GetOpenFileName(&ofn);
-
 
 	return FALSE;
 }
@@ -1191,7 +1163,7 @@ int BuyingAgent()
 	LPARAM lParam;
 
 	// Find AO window
-	if( !( AOWnd = FindWindow( "Anarchy client", "Anarchy Online" ) ) )
+	if( !( AOWnd = FindWindow( "Anarchy client", NULL ) ) )
 	{
 		DisplayErrorMessage( "Anarchy Online is not running.", TRUE );
 		g_BuyingAgentCount = 0;
@@ -1256,15 +1228,12 @@ void EndBuyingAgent()
 		// Remove keyboard focus
 		SetFocus( NULL );
 
-
 		// Close buying agent window
 		puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_WINDOW ), PUA_WINDOW_OPENED, FALSE );
 
 		// Open main window
 		puSetAttribute( g_MainWin, PUA_WINDOW_OPENED, TRUE );
 	}
-
-
 
 }
 
@@ -1337,121 +1306,59 @@ void WriteDebug(const char *txt)
 
 //slider setting functions
 
-
-
 void _dragMouse(int x0, int y0, int x1, int y1)
-
 {
-
 	POINT MousePos;
-
 	LPARAM lParam;
-
 	HWND AOWnd;
 
-
-
 	// Find AO window
-
-	if( !( AOWnd = FindWindow( "Anarchy client", "Anarchy Online" ) ) )
-
+	if( !( AOWnd = FindWindow( "Anarchy client", NULL ) ) )
 	{
-
 		DisplayErrorMessage( "Anarchy Online is not running.", TRUE );
-
 		g_BuyingAgentCount = 0;
 		g_BuyingAgentMissions = 0;
 		return;
-
 	}
-
-	
-
 	MousePos.x = x0;
-
 	MousePos.y = y0;
-
-
-
 	lParam = MousePos.y << 16 | MousePos.x;
-
-	
-
 	ClientToScreen( AOWnd, &MousePos );
-
 	SetCursorPos( MousePos.x, MousePos.y );
-
-
-
 	SendMessage( AOWnd, WM_LBUTTONDOWN, 0, lParam );
-
 	Sleep(250);
-
-
-
 	MousePos.x = x1;
-
 	MousePos.y = y1;
-
-
-
 	lParam = MousePos.y << 16 | MousePos.x;
-
-
-
 	ClientToScreen( AOWnd, &MousePos );
-
 	SetCursorPos( MousePos.x, MousePos.y );
-
-	
-
 	SendMessage( AOWnd, WM_MOUSEMOVE, 0, lParam );
-
 	Sleep(250);
-
 	SendMessage( AOWnd, WM_LBUTTONUP, 0, lParam );
-
 	Sleep(250);
-
-
-
 }
-
-
 
 /*
 
 these coords are from my initial observation with a macro program. they are ofset slightly.
 
-
-
 ; options button
 
 ; 200, 185
-
-
 
 ; difficulty slider
 
 ; 110, 165
 
-
-
 ; 1st slider
 
 ; 110, 210
 
-
-
 ; then add 15 pixels in Y for each subsequent row
-
-
 
 ; full left slider
 
 ; X = 60
-
-
 
 ; full right slider
 
@@ -1460,50 +1367,27 @@ these coords are from my initial observation with a macro program. they are ofse
 */
 
 
-
 float _linIinterp(float lo, float hi, float ratio)
-
 {
-
 	return (hi-lo)*ratio + lo;
-
 }
-
 
 
 void _setSliders(int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp)
-
 {
-
 	int ypos = 210;
 
 	//_dragMouse(200, 165, 200, 165);
-
 	if (easy_hard != 50) _dragMouse(102, 160, (int)_linIinterp(64, 141, easy_hard/100.0f), 160);
-
 	if (good_bad != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, good_bad/100.0f), ypos);
-
 	ypos += 18;
-
 	if (order_chaos != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, order_chaos/100.0f), ypos);
-
 	ypos += 18;
-
 	if (open_hidden != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, open_hidden/100.0f), ypos);
-
 	ypos += 18;
-
 	if (phys_myst != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, phys_myst/100.0f), ypos);
-
 	ypos += 18;
-
 	if (headon_stealth != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, headon_stealth/100.0f), ypos);
-
 	ypos += 18;
-
 	if (money_xp != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, money_xp/100.0f), ypos);
-
-
-
 }
-

@@ -2,18 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{ed4a52f5-ba7a-4e5c-814f-2d6d754ee182}</UniqueIdentifier>
+      <UniqueIdentifier>{3258ef8d-d50d-49d7-b0ab-9a2072e8979d}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{39e2e887-7f2c-470c-bfc4-9c1689c22fad}</UniqueIdentifier>
+      <UniqueIdentifier>{a819e945-3b24-4995-9d63-85d6197ada74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AOHook.cpp">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\madCodeHookLibL\Dll\madCodeHookLib - microsoft.lib" />
   </ItemGroup>
 </Project>

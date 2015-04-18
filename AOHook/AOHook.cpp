@@ -1,11 +1,11 @@
 /*
  * This DLL patches the DataBlockToMessage function
- * in AO's nr.dll. It is injected by ClickSaver
- * into AO process.
+ * in AO's MessageProtocol.dll. It is injected by
+ * ClickSaver into AO process.
  *
  * Note that you have to compile this project separately.
  * If you set it as dependance of ClickSaver, it will
- * tell the linker to link ClickSaver with AOHook.lib, 
+ * tell the linker to link ClickSaver with AOHook.lib,
  * which doesn't exist.
  *
  * The output path for the dll is the clicksaver sources
@@ -32,8 +32,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <windows.h>
-#include <madcodehooklib.h>
 #include <stdio.h>
+#include "Detours\detours.h"
 
 void*	g_pDataBlockToMessage = NULL;
 
@@ -50,82 +50,69 @@ void*	g_pDataBlockToMessage = NULL;
 // we don't need to know what it is.
 typedef void Message_t;
 
-Message_t* ( * pOriginalDataBlockToMessage )( int _Size, void* _pDataBlock );
+Message_t* (*pOriginalDataBlockToMessage)(int _Size, void* _pDataBlock);
 
-Message_t* DataBlockToMessageHook( int _Size, void* _pDataBlock )
+Message_t* DataBlockToMessageHook(int _Size, void* _pDataBlock)
 {
 	unsigned long* pData, Temp;
 	//FILE* fp;
 	HWND hWnd;
 
-	if( _Size > 0x40 )
-	{
+	if (_Size > 0x40) {
 		// For 14.2
-	//	pData = ( unsigned long* )( ( char* )_pDataBlock + 0x34 );
-
+	    // pData = ( unsigned long* )( ( char* )_pDataBlock + 0x34 );
 		// For 14.4.0.2 on test...
-		pData = ( unsigned long* )( ( char* )_pDataBlock + 0x33 );
-
+		pData = (unsigned long*)((char*)_pDataBlock + 0x33);
 		Temp = *pData;
-
-		/*if( fp = fopen( "g:\\AOHook_Log.bin", "ab" ) )
-		{
+		/*
+		if (fp = fopen( "g:\\AOHook_Log.bin", "ab")) {
 			fwrite( _pDataBlock, _Size, 1, fp );
 			fprintf( fp, "********" );
 			fclose( fp );
-		}*/
-
-		if( Temp == 0xc3da0000 )
-		{
-
+		}
+		*/
+		if (Temp == 0xc3da0000) {
 			// Find ClickSaver's hook thread window and send the datas
 			// using WM_COPYDATA
-			if( hWnd = FindWindow ( "ClickSaverHookWindowClass", "ClickSaverHookWindow" ) )
-			{
+			if (hWnd = FindWindow("ClickSaverHookWindowClass", "ClickSaverHookWindow")) {
 				COPYDATASTRUCT Data;
 				Data.cbData = _Size;
 				Data.lpData = _pDataBlock;
-
-				SendMessage( hWnd, WM_COPYDATA, 0, ( LPARAM )&Data );
+				SendMessage(hWnd, WM_COPYDATA, 0, (LPARAM)&Data);
 			}
 		}
 	}
-
-	return pOriginalDataBlockToMessage( _Size, _pDataBlock );
+	return pOriginalDataBlockToMessage(_Size, _pDataBlock);
 }
-
 
 int ProcessAttach( HINSTANCE _hModule )
 {
-	pOriginalDataBlockToMessage = NULL;
-
-	// Hook DataBlockToMessage (hook into MessageProtocol.dll from 15.9)
-	HookAPI( "MessageProtocol.dll", "?DataBlockToMessage@@YAPAVMessage_t@@IPAX@Z", 
-		DataBlockToMessageHook, ( void** )&pOriginalDataBlockToMessage );
-
-	FlushInstructionCache( GetCurrentProcess(), NULL, 0 );
-
-	return TRUE;
+    // Hook ::DataBlockToMessage() (incoming)
+    pOriginalDataBlockToMessage = (Message_t *(__cdecl*)(int,void*))::GetProcAddress(::GetModuleHandle("MessageProtocol.dll"), "?DataBlockToMessage@@YAPAVMessage_t@@IPAX@Z");
+    DetourTransactionBegin();
+    DetourUpdateThread(GetCurrentThread());
+    DetourAttach((PVOID*)&pOriginalDataBlockToMessage, DataBlockToMessageHook);
+    DetourTransactionCommit();
+    return TRUE;
 }
+
 
 int ProcessDetach( HINSTANCE _hModule )
 {
-	if( pOriginalDataBlockToMessage )
-		UnhookCode( ( void** )&pOriginalDataBlockToMessage );
-
-	return TRUE;
+    LONG res1 = DetourTransactionBegin();
+    LONG res2 = DetourUpdateThread(GetCurrentThread());
+    LONG res3 = DetourDetach((PVOID*)&pOriginalDataBlockToMessage, DataBlockToMessageHook);
+    LONG res4 = DetourTransactionCommit();
+    return TRUE;
 }
 
 BOOL APIENTRY DllMain(HINSTANCE _hModule, DWORD _dwReason, PVOID _lpReserved)
 {
-	switch( _dwReason )
-	{
+	switch (_dwReason)	{
 		case DLL_PROCESS_ATTACH:
 			return ProcessAttach( _hModule );
-
 		case DLL_PROCESS_DETACH:
 			return ProcessDetach( _hModule );
 	}
-
 	return TRUE;
 }
