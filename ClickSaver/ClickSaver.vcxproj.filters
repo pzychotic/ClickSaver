@@ -1,58 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{fa796cc9-240d-4ced-be7f-55fba7a0c950}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{9cb12ff4-9ec7-46bd-848c-05b122f897ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AODB">
+    <Filter Include="Source\AODB">
       <UniqueIdentifier>{d73de560-2c3b-4fbb-bfa3-6e126295ab2f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{02ac0071-40e4-4dd9-a175-33a830027a3e}</UniqueIdentifier>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{c6601cea-58e0-4e7d-bde1-134b8394b4e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AODB\AODB.c">
-      <Filter>src\AODB</Filter>
+      <Filter>Source\AODB</Filter>
     </ClCompile>
     <ClCompile Include="AODB\ctree.c">
-      <Filter>src\AODB</Filter>
-    </ClCompile>
-    <ClCompile Include="hook.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="mission.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="localdb.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="guidef.c">
-      <Filter>src</Filter>
+      <Filter>Source\AODB</Filter>
     </ClCompile>
     <ClCompile Include="clicksaver.c">
-      <Filter>src</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="guidef.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="localdb.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="mission.c">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AODB\AODB.h">
-      <Filter>src\AODB</Filter>
+      <Filter>Source\AODB</Filter>
     </ClInclude>
     <ClInclude Include="AODB\ctree.h">
-      <Filter>src\AODB</Filter>
+      <Filter>Source\AODB</Filter>
     </ClInclude>
     <ClInclude Include="clicksaver.h">
-      <Filter>include</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="mission.h">
-      <Filter>include</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cs.ico" />
+    <ResourceCompile Include="ClickSaver.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="ClickSaver.rc" />
+    <None Include="cs.ico">
+      <Filter>Resource</Filter>
+    </None>
   </ItemGroup>
 </Project>
