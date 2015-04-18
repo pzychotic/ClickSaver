@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <stdio.h>
 #include <Detours/detours.h>
 
-void*	g_pDataBlockToMessage = NULL;
+void*   g_pDataBlockToMessage = NULL;
 
 // According to this documention of VC++ name-mangling
 // http://www.kegel.com/mangle.html:
@@ -54,35 +54,35 @@ Message_t* (*pOriginalDataBlockToMessage)(int _Size, void* _pDataBlock);
 
 Message_t* DataBlockToMessageHook(int _Size, void* _pDataBlock)
 {
-	unsigned long* pData, Temp;
-	//FILE* fp;
-	HWND hWnd;
+    unsigned long* pData, Temp;
+    //FILE* fp;
+    HWND hWnd;
 
-	if (_Size > 0x40) {
-		// For 14.2
-	    // pData = ( unsigned long* )( ( char* )_pDataBlock + 0x34 );
-		// For 14.4.0.2 on test...
-		pData = (unsigned long*)((char*)_pDataBlock + 0x33);
-		Temp = *pData;
-		/*
-		if (fp = fopen( "g:\\AOHook_Log.bin", "ab")) {
-			fwrite( _pDataBlock, _Size, 1, fp );
-			fprintf( fp, "********" );
-			fclose( fp );
-		}
-		*/
-		if (Temp == 0xc3da0000) {
-			// Find ClickSaver's hook thread window and send the datas
-			// using WM_COPYDATA
-			if (hWnd = FindWindow("ClickSaverHookWindowClass", "ClickSaverHookWindow")) {
-				COPYDATASTRUCT Data;
-				Data.cbData = _Size;
-				Data.lpData = _pDataBlock;
-				SendMessage(hWnd, WM_COPYDATA, 0, (LPARAM)&Data);
-			}
-		}
-	}
-	return pOriginalDataBlockToMessage(_Size, _pDataBlock);
+    if (_Size > 0x40) {
+        // For 14.2
+        // pData = ( unsigned long* )( ( char* )_pDataBlock + 0x34 );
+        // For 14.4.0.2 on test...
+        pData = (unsigned long*)((char*)_pDataBlock + 0x33);
+        Temp = *pData;
+        /*
+        if (fp = fopen( "g:\\AOHook_Log.bin", "ab")) {
+            fwrite( _pDataBlock, _Size, 1, fp );
+            fprintf( fp, "********" );
+            fclose( fp );
+        }
+        */
+        if (Temp == 0xc3da0000) {
+            // Find ClickSaver's hook thread window and send the datas
+            // using WM_COPYDATA
+            if (hWnd = FindWindow("ClickSaverHookWindowClass", "ClickSaverHookWindow")) {
+                COPYDATASTRUCT Data;
+                Data.cbData = _Size;
+                Data.lpData = _pDataBlock;
+                SendMessage(hWnd, WM_COPYDATA, 0, (LPARAM)&Data);
+            }
+        }
+    }
+    return pOriginalDataBlockToMessage(_Size, _pDataBlock);
 }
 
 int ProcessAttach( HINSTANCE _hModule )
@@ -108,11 +108,11 @@ int ProcessDetach( HINSTANCE _hModule )
 
 BOOL APIENTRY DllMain(HINSTANCE _hModule, DWORD _dwReason, PVOID _lpReserved)
 {
-	switch (_dwReason)	{
-		case DLL_PROCESS_ATTACH:
-			return ProcessAttach( _hModule );
-		case DLL_PROCESS_DETACH:
-			return ProcessDetach( _hModule );
-	}
-	return TRUE;
+    switch (_dwReason)  {
+        case DLL_PROCESS_ATTACH:
+            return ProcessAttach( _hModule );
+        case DLL_PROCESS_DETACH:
+            return ProcessDetach( _hModule );
+    }
+    return TRUE;
 }

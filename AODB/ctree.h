@@ -29,38 +29,38 @@ typedef void *pVOID;
 typedef ULONG VRLEN, *pVRLEN;
 
 typedef struct iseg {
-	COUNT soffset; /* segment position (offset) */ 
-	COUNT slength; /* segment length */ 
-	COUNT segmode; /* segment mode */ 
+    COUNT soffset; /* segment position (offset) */
+    COUNT slength; /* segment length */
+    COUNT segmode; /* segment mode */
 } ISEG, *pISEG;
 
 typedef struct iidx {
-	COUNT ikeylen; /* key length */ 
-	COUNT ikeytyp; /* key type */ 
-	COUNT ikeydup; /* duplicate flag */ 
-	COUNT inulkey; /* NULL key flag */ 
-	COUNT iempchr; /* empty character */ 
-	COUNT inumseg; /* number of segments */ 
-	pISEG seg; /* segment information */ 
-	pTEXT ridxnam; /* r-tree symbolic name */ 
-	pTEXT aidxnam; /* optional index file name */ 
-	pCOUNT altseq; /* optional alternate sequence */ 
-	pUTEXT pvbyte; /* optional pointer to pad byte */ 
+    COUNT ikeylen; /* key length */
+    COUNT ikeytyp; /* key type */
+    COUNT ikeydup; /* duplicate flag */
+    COUNT inulkey; /* NULL key flag */
+    COUNT iempchr; /* empty character */
+    COUNT inumseg; /* number of segments */
+    pISEG seg; /* segment information */
+    pTEXT ridxnam; /* r-tree symbolic name */
+    pTEXT aidxnam; /* optional index file name */
+    pCOUNT altseq; /* optional alternate sequence */
+    pUTEXT pvbyte; /* optional pointer to pad byte */
 } IIDX, *pIIDX;
 
 typedef struct ifil {
-	pTEXT pfilnam; /* file name (w/o ext) */ 
-	COUNT dfilno; /* data file number */ 
-	UCOUNT dreclen; /* data record length */ 
-	UCOUNT dxtdsiz; /* data file ext size */ 
-	COUNT dfilmod; /* data file mode */ 
-	COUNT dnumidx; /* number of indices */ 
-	UCOUNT ixtdsiz; /* index file ext size */ 
-	COUNT ifilmod; /* index file mode */ 
-	pIIDX ix; /* index information */ 
-	pTEXT rfstfld; /* r-tree 1st fld name */ 
-	pTEXT rlstfld; /* r-tree last fld name */ 
-	COUNT tfilno; /* temporary file number */ 
+    pTEXT pfilnam; /* file name (w/o ext) */
+    COUNT dfilno; /* data file number */
+    UCOUNT dreclen; /* data record length */
+    UCOUNT dxtdsiz; /* data file ext size */
+    COUNT dfilmod; /* data file mode */
+    COUNT dnumidx; /* number of indices */
+    UCOUNT ixtdsiz; /* index file ext size */
+    COUNT ifilmod; /* index file mode */
+    pIIDX ix; /* index information */
+    pTEXT rfstfld; /* r-tree 1st fld name */
+    pTEXT rlstfld; /* r-tree last fld name */
+    COUNT tfilno; /* temporary file number */
 } IFIL, *pIFIL;
 
 #ifdef _CTREE_CPP
@@ -70,7 +70,7 @@ typedef struct ifil {
 #endif
 
 DECLARE COUNT (__cdecl * InitISAM)(COUNT bufs, COUNT fils, COUNT sect);
-DECLARE COUNT (__cdecl * CloseISAM)(); 
+DECLARE COUNT (__cdecl * CloseISAM)();
 DECLARE COUNT (__cdecl * OpenIFile)(pIFIL ifilptr);
 DECLARE COUNT (__cdecl * CloseIFile)(pIFIL ifilptr);
 DECLARE COUNT (__cdecl * GetRecord)(COUNT keyno, pVOID target, pVOID recptr);

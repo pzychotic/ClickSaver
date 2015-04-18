@@ -83,79 +83,79 @@ bool InjectDLL(DWORD ProcessID, std::string const& dllName)
 
 void Inject()
 {
-	HWND AOWnd;
-	DWORD AOProcessId;
-	//HANDLE AOProcessHnd;
+    HWND AOWnd;
+    DWORD AOProcessId;
+    //HANDLE AOProcessHnd;
 
-	if (AOWnd = FindWindow( "Anarchy client", NULL)) {
-		char Temp[256];
-		// Get process id
-		GetWindowThreadProcessId(AOWnd, &AOProcessId);
-		sprintf(Temp, "%s\\AOHook.dll", g_CSDir);
-		if (!InjectDLL(AOProcessId, Temp)) {
-			// error...
-		}
-	}
+    if (AOWnd = FindWindow( "Anarchy client", NULL)) {
+        char Temp[256];
+        // Get process id
+        GetWindowThreadProcessId(AOWnd, &AOProcessId);
+        sprintf(Temp, "%s\\AOHook.dll", g_CSDir);
+        if (!InjectDLL(AOProcessId, Temp)) {
+            // error...
+        }
+    }
 }
 
 LRESULT CALLBACK HookWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	COPYDATASTRUCT* pData;
+    COPYDATASTRUCT* pData;
 
-	switch (msg) {
-		case WM_TIMER:
-			Inject();
-			break;
-		case WM_COPYDATA:
-			pData = (PCOPYDATASTRUCT)lParam;
-			WaitForSingleObject( g_Mutex, INFINITE );
-			memset(g_CurrentPacket, 0, 65536);
-			memcpy(g_CurrentPacket, pData->lpData, pData->cbData);
-			ReleaseMutex(g_Mutex);
-			puSendAppMessage(CSAM_NEWMISSIONS, 0);
-			break;
-		default:
-			return DefWindowProc(hWnd, msg, wParam, lParam);
-	}
-	return 0;
+    switch (msg) {
+        case WM_TIMER:
+            Inject();
+            break;
+        case WM_COPYDATA:
+            pData = (PCOPYDATASTRUCT)lParam;
+            WaitForSingleObject( g_Mutex, INFINITE );
+            memset(g_CurrentPacket, 0, 65536);
+            memcpy(g_CurrentPacket, pData->lpData, pData->cbData);
+            ReleaseMutex(g_Mutex);
+            puSendAppMessage(CSAM_NEWMISSIONS, 0);
+            break;
+        default:
+            return DefWindowProc(hWnd, msg, wParam, lParam);
+    }
+    return 0;
 }
 
 extern "C" DWORD WINAPI HookManagerThread(void *_pParam)
 {
-	WNDCLASSEX HookWndClass;
-	HWND hWnd;
-	int RetCode;
-	MSG msg;
-	UINT Timer;
+    WNDCLASSEX HookWndClass;
+    HWND hWnd;
+    int RetCode;
+    MSG msg;
+    UINT Timer;
 
-	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
 
-	HookWndClass.cbSize = sizeof(WNDCLASSEX);
-	HookWndClass.style = 0;
-	HookWndClass.lpfnWndProc = HookWndProc;
-	HookWndClass.cbClsExtra = 0;
-	HookWndClass.cbWndExtra = 0;
-	HookWndClass.hInstance = NULL;
-	HookWndClass.hIcon = NULL;
-	HookWndClass.hCursor = NULL;
-	HookWndClass.hbrBackground = NULL;
-	HookWndClass.lpszMenuName = NULL;
-	HookWndClass.lpszClassName = "ClickSaverHookWindowClass";
-	HookWndClass.hIconSm = NULL;
+    HookWndClass.cbSize = sizeof(WNDCLASSEX);
+    HookWndClass.style = 0;
+    HookWndClass.lpfnWndProc = HookWndProc;
+    HookWndClass.cbClsExtra = 0;
+    HookWndClass.cbWndExtra = 0;
+    HookWndClass.hInstance = NULL;
+    HookWndClass.hIcon = NULL;
+    HookWndClass.hCursor = NULL;
+    HookWndClass.hbrBackground = NULL;
+    HookWndClass.lpszMenuName = NULL;
+    HookWndClass.lpszClassName = "ClickSaverHookWindowClass";
+    HookWndClass.hIconSm = NULL;
 
-	RegisterClassEx( &HookWndClass );
+    RegisterClassEx( &HookWndClass );
 
-	/* Create window */
-	hWnd = CreateWindowEx(0, "ClickSaverHookWindowClass", "ClickSaverHookWindow", WS_MINIMIZE, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, NULL, NULL);
-	Inject();
-	Timer = SetTimer(hWnd, 0, 5000, NULL);
-	while (RetCode = GetMessage( &msg, NULL, 0, 0))	{
-		if (RetCode != -1) {
-			TranslateMessage( &msg );
-			DispatchMessage( &msg );
-		}
-	}
-	KillTimer(hWnd, Timer);
-	DestroyWindow(hWnd);
-	return TRUE;
+    /* Create window */
+    hWnd = CreateWindowEx(0, "ClickSaverHookWindowClass", "ClickSaverHookWindow", WS_MINIMIZE, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, NULL, NULL);
+    Inject();
+    Timer = SetTimer(hWnd, 0, 5000, NULL);
+    while (RetCode = GetMessage( &msg, NULL, 0, 0)) {
+        if (RetCode != -1) {
+            TranslateMessage( &msg );
+            DispatchMessage( &msg );
+        }
+    }
+    KillTimer(hWnd, Timer);
+    DestroyWindow(hWnd);
+    return TRUE;
 }
