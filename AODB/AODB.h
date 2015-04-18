@@ -33,8 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define AODB_TYP_PF         0xF4241
 
 /* Functions */
-long InitAODatabase(char *strAOFolder);
+long InitAODatabase( char* strAOFolder );
 //void DecodeDataChunk(PUU8 *a_xData, unsigned long lDataLen);
-void ReleaseAODatabase(void);
+void ReleaseAODatabase( void );
 
 #endif /* _AODB_INC */

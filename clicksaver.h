@@ -86,21 +86,13 @@ enum
     CS_ITEMVALUE_MTOTAL,
 
     CS_SLIDER_TAB,
-
     CS_SLIDER_EASY_HARD,
-
     CS_SLIDER_GOOD_BAD,
-
     CS_SLIDER_ORDER_CHAOS,
-
     CS_SLIDER_OPEN_HIDDEN,
-
     CS_SLIDER_PHYS_MYST,
-
     CS_SLIDER_HEADON_STEALTH,
-
     CS_SLIDER_MONEY_XP,
-
 
     CS_MISSION1,
     CS_MISSION2,
@@ -185,8 +177,8 @@ extern PUU8 g_bFullscreen;
 int CreateLocalDatabase();
 int OpenLocalDB();
 void* GetDataChunk( PUU32 _KeyHi, PUU32 _KeyLo, PUU32* _pSize );
-void DebugPacket(void *pData, unsigned int length);
-void WriteLog(const char *Format, ...);
-void WriteDebug(const char *txt);
+void DebugPacket( void* pData, unsigned int length );
+void WriteLog( const char* Format, ... );
+void WriteDebug( const char* txt );
 
 #endif

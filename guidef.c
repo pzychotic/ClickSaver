@@ -134,19 +134,12 @@ PUU32 g_GUIDef[]=
                     PUNOTIFY_ACTION_APPMSG, CSAM_STARTFULLSCREEN,
                 0,
             PUM_ADDCHILD, PU_ACTION_OBJDEF, 0, ( PUU32 )"Text",
-
                 PUA_TEXT_STRING, ( PUU32 )"Set Sliders Now",
-
                 PUA_CONTROL_FRAME, PUFRAME_BUTTON,
-
                 PUA_CONTROL_ISBUTTON, TRUE, 0,
-
                 PUM_ADDNOTIFICATION,
-
                     PUNOTIFY_CONDITION_ATTREQUALS, PUA_CONTROL_CLICKED, TRUE,
-
                     PUNOTIFY_ACTION_APPMSG, CSAM_SET_SLIDERS,
-
                 0,
         PU_ENDGROUP,
 
@@ -314,204 +307,103 @@ PUU32 g_GUIDef[]=
 // **** Mission slider tab ****
 
     PU_ACTION_OBJDEF, CS_SLIDER_TAB, ( PUU32 )"VerGroup", 0,
-
         PUM_ADDCHILD, PU_LABEL( "Choose Mission slider amounts" ),
-
         PUM_ADDCHILD, PU_LABEL( "0 = full left, 100 = full right" ),
-
         PUM_ADDCHILD, PU_LABEL( "Added by Numbfreeze" ),
-
         PUM_ADDCHILD, PU_TITLE( "Mission Sliders" ),
-
         PUM_ADDCHILD, PU_LEFT_VERGROUP,
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPEREPAIR_CB, "Difficulty" ),
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPERETURN_CB, "Good/Bad" ),
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPEFINDP_CB, "Order/Chaos" ),
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPEFINDI_CB, "Open/Hidden" ),
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPEASS_CB, "Phys/Myst" ),
-
             //PUM_ADDCHILD, PU_SET_CHECKBOX( CS_TYPEASS_CB, "Money/XP" ),
 
-
-
-
-
             PUM_ADDCHILD, PU_LABEL( "Easy/Hard:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_EASY_HARD, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Good/Bad:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_GOOD_BAD, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Order/Chaos:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_ORDER_CHAOS, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Open/Hidden:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_OPEN_HIDDEN, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Phys/Myst:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_PHYS_MYST, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Head On/Stealth:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_HEADON_STEALTH, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
-
-
 
             PUM_ADDCHILD, PU_LABEL( "Money/XP:" ),
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, CS_SLIDER_MONEY_XP, ( PUU32 )"TextEntry",
-
                 PUA_CONTROL_WEIGHT, 1,
-
                 PUA_TEXTENTRY_NUMERIC, TRUE,
-
                 PUA_TEXTENTRY_MIN, 0,
-
                 PUA_TEXTENTRY_MAX, 100,
-
                 PUA_TEXTENTRY_BUFFERSIZE, 5,
-
                 PUA_TEXTENTRY_VALUE, 50,
-
             0, 0,
 
-
-
             PUM_ADDCHILD, PU_ACTION_OBJDEF, 0, ( PUU32 )"Text",
-
                 PUA_TEXT_STRING, ( PUU32 )"Set Sliders Now",
-
                 PUA_CONTROL_FRAME, PUFRAME_BUTTON,
-
                 PUA_CONTROL_ISBUTTON, TRUE, 0,
-
                 PUM_ADDNOTIFICATION,
-
                     PUNOTIFY_CONDITION_ATTREQUALS, PUA_CONTROL_CLICKED, TRUE,
-
                     PUNOTIFY_ACTION_APPMSG, CSAM_SET_SLIDERS,
-
                 0,
 
 
-
-
-
         PUM_ADDCHILD, PU_LABEL( "IMPORTANT: Sliders must be in default positions for this to work" ),
-
         PUM_ADDCHILD, PU_LABEL( "and the 'More Options' section of the mission window must be OPEN!" ),
 
-
-
         PU_ENDGROUP,
-
         PUM_ADDCHILD, PU_SPACER,
-
-
 
     PU_ENDGROUP,
 

@@ -43,7 +43,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 typedef struct
 {
-    PUU8    pName[AODB_MAX_NAME_LEN + 1];
+    PUU8    pName[ AODB_MAX_NAME_LEN + 1 ];
     PUU32   Value;
     PUU32   QL;
     PUU32   IconKey;
@@ -54,10 +54,10 @@ typedef struct
     pusObjectCollection*    pCol;
     pusObjectCollection*    pSingleCol;
     pusObjectCollection*    pTeamCol;
-    PUU8                    CashStr[16];
-    PUU8                    XPStr[16];
-    PUU8                    TimeStr[16];
-    PUU8                    TypeStr[16];
+    PUU8                    CashStr[ 16 ];
+    PUU8                    XPStr[ 16 ];
+    PUU8                    TimeStr[ 16 ];
+    PUU8                    TypeStr[ 16 ];
     MissionItem             Reward;
     PUU8*                   pImageData;
 } MissionClassData;

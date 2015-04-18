@@ -28,53 +28,58 @@ static HINSTANCE hDll = NULL;
     memcpy(&(a), &fnDll, sizeof(void *));
 
 // Perform dynamic linking of ctreestd.dll functions
-int CTreeStd_LinkDll(char *DllPath) {
+int CTreeStd_LinkDll( char *DllPath )
+{
     FARPROC fnDll;
 
-    if (hDll) {
+    if( hDll )
+    {
         // Already linked. Signal success.
         return 1;
     }
 
     // Load the dll file into memory
-    hDll = LoadLibrary(DllPath);
-    if (hDll == NULL) {
+    hDll = LoadLibrary( DllPath );
+    if( hDll == NULL )
+    {
         // Unable to load library file. Signal failure.
         return 0;
     }
 
     // Look up functions in the dll and set their pointers
     // On failure, jump to exit_error.
-    DYNLINK(InitISAM, "INTISAM");
-    DYNLINK(CloseISAM, "CLISAM");
-    DYNLINK(OpenIFile, "OPNIFIL");
-    DYNLINK(CloseIFile, "CLIFIL");
-    DYNLINK(GetRecord, "EQLREC");
-    DYNLINK(GetVRecord, "EQLVREC");
-    DYNLINK(VRecordLength, "GETVLEN");
-    DYNLINK(ReReadVRecord, "REDVREC");
+    DYNLINK( InitISAM, "INTISAM" );
+    DYNLINK( CloseISAM, "CLISAM" );
+    DYNLINK( OpenIFile, "OPNIFIL" );
+    DYNLINK( CloseIFile, "CLIFIL" );
+    DYNLINK( GetRecord, "EQLREC" );
+    DYNLINK( GetVRecord, "EQLVREC" );
+    DYNLINK( VRecordLength, "GETVLEN" );
+    DYNLINK( ReReadVRecord, "REDVREC" );
 
-    DYNLINK(FirstKey, "FRSKEY");
-    DYNLINK(NextKey, "NXTKEY");
-    DYNLINK(GetGTEKey, "GTEKEY");
-    DYNLINK(ReWriteVRecord, "RWTVREC");
-    DYNLINK(NextVRecord, "NXTVREC" );
-    DYNLINK(GetGTEVRecord, "GTEVREC" );
+    DYNLINK( FirstKey, "FRSKEY" );
+    DYNLINK( NextKey, "NXTKEY" );
+    DYNLINK( GetGTEKey, "GTEKEY" );
+    DYNLINK( ReWriteVRecord, "RWTVREC" );
+    DYNLINK( NextVRecord, "NXTVREC" );
+    DYNLINK( GetGTEVRecord, "GTEVREC" );
 
     return 1; // No Failures.  Signal success.
 
 exit_error:
     // Function name not found in the dynamic link table by
     // GetProcAddress.  Unload the dll and signal failure.
-    FreeLibrary(hDll);
+    FreeLibrary( hDll );
     hDll = NULL;
     return 0;
 }
 
 
 // Unlink ctreestd.dll functions and unload the dll
-void CTreeStd_UnlinkDll() {
-    if (!hDll) {
+void CTreeStd_UnlinkDll()
+{
+    if( !hDll )
+    {
         // It isn't linked yet, nothing to do.
         return;
     }
@@ -92,6 +97,6 @@ void CTreeStd_UnlinkDll() {
     ReReadVRecord = NULL;
 
     // Unload the dll library from memory
-    FreeLibrary(hDll);
+    FreeLibrary( hDll );
     hDll = NULL;
 }

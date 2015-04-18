@@ -34,22 +34,22 @@ IIDX udtAODBindex;
 ISEG udtAODBseg[2];
 
 /* Initialise AO Database */
-long InitAODatabase(char *strAOFolder)
+long InitAODatabase( char* strAOFolder )
 {
     COUNT iErrVal;
 
     /* Build full path/file */
-    wsprintf(strAODBpath, "%s%s", strAOFolder, "\\cd_image\\data\\db\\ResourceDatabase");
+    wsprintf( strAODBpath, "%s%s", strAOFolder, "\\cd_image\\data\\db\\ResourceDatabase" );
 
     /* Link the Ctree DLL */
-    if (!CTreeStd_LinkDll("ctreestd.dll"))
+    if( !CTreeStd_LinkDll( "ctreestd.dll" ) )
     {
         iErrVal = AODB_ERR_NODLL;
         goto InitAODatabase_Err_nodll;
     }
 
     /* Initialise Ctree */
-    if (InitISAM(6,4,32))
+    if( InitISAM( 6, 4, 32 ) )
     {
         iErrVal = AODB_ERR_NOINIT;
         goto InitAODatabase_Err_noinit;
@@ -79,15 +79,15 @@ long InitAODatabase(char *strAOFolder)
     udtAODBindex.aidxnam = 0;
     udtAODBindex.altseq = 0;
     udtAODBindex.pvbyte = 0;
-    udtAODBseg[0].soffset = 0;
-    udtAODBseg[0].slength = 4;
-    udtAODBseg[0].segmode = 1;
-    udtAODBseg[1].soffset = 4;
-    udtAODBseg[1].slength = 4;
-    udtAODBseg[1].segmode = 1;
+    udtAODBseg[ 0 ].soffset = 0;
+    udtAODBseg[ 0 ].slength = 4;
+    udtAODBseg[ 0 ].segmode = 1;
+    udtAODBseg[ 1 ].soffset = 4;
+    udtAODBseg[ 1 ].slength = 4;
+    udtAODBseg[ 1 ].segmode = 1;
 
     /* Open the AO database */
-    if (OpenIFile(&udtAODBfile))
+    if( OpenIFile( &udtAODBfile ) )
     {
         iErrVal = AODB_ERR_NODB;
         goto InitAODatabase_Err_nodb;
@@ -102,6 +102,7 @@ InitAODatabase_Err_noinit:
 InitAODatabase_Err_nodll:
     return iErrVal;
 }
+
 
 /* Decodes data - only required for items */
 /*void DecodeDataChunk(BYTE *a_xData, unsigned long lDataLen)
@@ -123,10 +124,11 @@ InitAODatabase_Err_nodll:
     }
 }*/
 
+
 /* Release the AO Database */
-void ReleaseAODatabase(void)
+void ReleaseAODatabase( void )
 {
-    CloseIFile(&udtAODBfile);
+    CloseIFile( &udtAODBfile );
     CloseISAM();
     CTreeStd_UnlinkDll();
 }

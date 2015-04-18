@@ -28,13 +28,15 @@ typedef unsigned long ULONG, *pULONG;
 typedef void *pVOID;
 typedef ULONG VRLEN, *pVRLEN;
 
-typedef struct iseg {
+typedef struct iseg
+{
     COUNT soffset; /* segment position (offset) */
     COUNT slength; /* segment length */
     COUNT segmode; /* segment mode */
 } ISEG, *pISEG;
 
-typedef struct iidx {
+typedef struct iidx
+{
     COUNT ikeylen; /* key length */
     COUNT ikeytyp; /* key type */
     COUNT ikeydup; /* duplicate flag */
@@ -48,7 +50,8 @@ typedef struct iidx {
     pUTEXT pvbyte; /* optional pointer to pad byte */
 } IIDX, *pIIDX;
 
-typedef struct ifil {
+typedef struct ifil
+{
     pTEXT pfilnam; /* file name (w/o ext) */
     COUNT dfilno; /* data file number */
     UCOUNT dreclen; /* data record length */
@@ -69,26 +72,26 @@ typedef struct ifil {
 #define DECLARE extern
 #endif
 
-DECLARE COUNT (__cdecl * InitISAM)(COUNT bufs, COUNT fils, COUNT sect);
-DECLARE COUNT (__cdecl * CloseISAM)();
-DECLARE COUNT (__cdecl * OpenIFile)(pIFIL ifilptr);
-DECLARE COUNT (__cdecl * CloseIFile)(pIFIL ifilptr);
-DECLARE COUNT (__cdecl * GetRecord)(COUNT keyno, pVOID target, pVOID recptr);
-DECLARE COUNT (__cdecl * GetVRecord)(COUNT keyno, pVOID target, pVOID recptr, pVRLEN plen);
-DECLARE COUNT (__cdecl * VRecordLength)(COUNT datno);
-DECLARE COUNT (__cdecl * ReReadVRecord)(COUNT datno, pVOID recptr, VRLEN bufsiz);
+DECLARE COUNT( __cdecl * InitISAM )( COUNT bufs, COUNT fils, COUNT sect );
+DECLARE COUNT( __cdecl * CloseISAM )( );
+DECLARE COUNT( __cdecl * OpenIFile )( pIFIL ifilptr );
+DECLARE COUNT( __cdecl * CloseIFile )( pIFIL ifilptr );
+DECLARE COUNT( __cdecl * GetRecord )( COUNT keyno, pVOID target, pVOID recptr );
+DECLARE COUNT( __cdecl * GetVRecord )( COUNT keyno, pVOID target, pVOID recptr, pVRLEN plen );
+DECLARE COUNT( __cdecl * VRecordLength )( COUNT datno );
+DECLARE COUNT( __cdecl * ReReadVRecord )( COUNT datno, pVOID recptr, VRLEN bufsiz );
 
-DECLARE COUNT (__cdecl * FirstKey)(COUNT keyno, pVOID idxval);
-DECLARE LONG (__cdecl * NextKey)(COUNT keyno, pVOID idxval);
-DECLARE COUNT (__cdecl * GetGTEKey)(COUNT keyno, pVOID target, pVOID idxval);
-DECLARE COUNT (__cdecl * NextVRecord)(COUNT keyno, pVOID recptr, pVRLEN plen);
-DECLARE COUNT (__cdecl * GetGTEVRecord)(COUNT keyno, pVOID Target, pVOID recptr, pVRLEN plen);
+DECLARE COUNT( __cdecl * FirstKey )( COUNT keyno, pVOID idxval );
+DECLARE LONG ( __cdecl * NextKey )( COUNT keyno, pVOID idxval );
+DECLARE COUNT( __cdecl * GetGTEKey )( COUNT keyno, pVOID target, pVOID idxval );
+DECLARE COUNT( __cdecl * NextVRecord )( COUNT keyno, pVOID recptr, pVRLEN plen );
+DECLARE COUNT( __cdecl * GetGTEVRecord )( COUNT keyno, pVOID Target, pVOID recptr, pVRLEN plen );
 
-DECLARE COUNT (__cdecl * ReWriteVRecord)(COUNT datno, pVOID recptr, VRLEN bufsiz);
+DECLARE COUNT( __cdecl * ReWriteVRecord )( COUNT datno, pVOID recptr, VRLEN bufsiz );
 
 
 
-DECLARE int CTreeStd_LinkDll(char *DllPath);
+DECLARE int CTreeStd_LinkDll( char *DllPath );
 DECLARE void CTreeStd_UnlinkDll();
 
 #endif /* _CTREE_INC */

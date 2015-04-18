@@ -79,13 +79,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "BerkeleyDB/db.h"
 
 void CleanUp();
-void ImportSettings(char*filename);
-void ExportSettings(char*filename);
+void ImportSettings( char* filename );
+void ExportSettings( char* filename );
 
 void DisplayErrorMessage( PUU8* _pMessage, PUU32 _bAsynchronous );
 
-void GetFolder(HWND hWndOwner, char *strTitle, char *strPath);
-BOOL GetFile(HWND hWndOwner, BOOL saving, char *buffer, int buffersize);
+void GetFolder( HWND hWndOwner, char *strTitle, char *strPath );
+BOOL GetFile( HWND hWndOwner, BOOL saving, char *buffer, int buffersize );
 
 int BuyingAgent();
 void EndBuyingAgent();
@@ -94,7 +94,7 @@ extern PUU32 g_GUIDef[];
 pusObjectCollection* g_pCol;
 PULID g_ItemWatchList, g_LocWatchList, g_MainWin;
 
-void _setSliders(int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp);
+void _setSliders( int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp );
 
 PUU32 g_BuyingAgentCount = 0;
 PUU32 g_BuyingAgentMissions = 0;
@@ -102,18 +102,20 @@ PUU32 g_bFirstRound = TRUE;
 PUU8 g_MishNumber = 0, g_FoundMish = -1;
 PUU8 g_bFullscreen = 0;
 
-char g_CurrentPacket[65536];
+char g_CurrentPacket[ 65536 ];
 
-char g_AODir[256] = "";
-char g_CSDir[256] = "";
+char g_AODir[ 256 ] = "";
+char g_CSDir[ 256 ] = "";
 
 HANDLE g_Mutex = INVALID_HANDLE_VALUE;
 HANDLE g_Thread = INVALID_HANDLE_VALUE;
-DWORD WINAPI HookManagerThread(void *pParam);
+DWORD WINAPI HookManagerThread( void *pParam );
 
 DB* g_pDB = NULL;
 
-typedef enum ImportSettingsMode {
+
+typedef enum ImportSettingsMode
+{
     ISM_CONFIG,
     ISM_LOCWATCH,
     ISM_ITEMWATCH,
@@ -126,13 +128,13 @@ int main( int argc, char** argv )
 {
     pusAppMessage* pAppMsg;
     void* pMissionData;
-    PULID MissionControls[5];
+    PULID MissionControls[ 5 ];
     FILE* fp;
-    char AOExePath[256];
+    char AOExePath[ 256 ];
     DWORD dwThreadID;
     HANDLE hOrigDB, hLocalDB;
     int bUpdateDB = FALSE;
-    char DBPath[256 * 2];
+    char DBPath[ 256 * 2 ];
 
     // Set main thread of clicksaver on a priority above normal
     // Helps a lot. Refreshing of missions infos is much faster.
@@ -140,7 +142,9 @@ int main( int argc, char** argv )
 
     // Initialise PUL
     if( !puInit() )
+    {
         return -1;
+    }
 
     // Register mission control class
     if( !RegisterMissionClass() )
@@ -157,15 +161,15 @@ int main( int argc, char** argv )
     }
 
     g_MainWin = puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW );
-    SendMessage((HWND)g_MainWin, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(NULL, IDI_ICON1));
-    SendMessage((HWND)g_MainWin, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon(NULL, IDI_ICON1));
+    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon( NULL, IDI_ICON1 ) );
+    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon( NULL, IDI_ICON1 ) );
     g_ItemWatchList = puGetObjectFromCollection( g_pCol, CS_ITEMWATCH_LIST );
     g_LocWatchList = puGetObjectFromCollection( g_pCol, CS_LOCWATCH_LIST );
 
     // Get current directory
     GetCurrentDirectory( 256, g_CSDir );
 
-    ImportSettings("LastSettings.cs");
+    ImportSettings( "LastSettings.cs" );
 
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED ) )
         puSetAttribute( g_MainWin, PUA_WINDOW_ICONIFIED, TRUE );
@@ -175,7 +179,7 @@ int main( int argc, char** argv )
     {
         GetFolder( NULL, "Please locate the AO directory:", g_AODir );
 
-        if( !g_AODir[0] )
+        if( !g_AODir[ 0 ] )
         {
             CleanUp();
             return -1;
@@ -216,7 +220,9 @@ int main( int argc, char** argv )
         CloseHandle( hLocalDB );
     }
     else
+    {
         bUpdateDB = TRUE;
+    }
 
     if( bUpdateDB )
     {
@@ -232,7 +238,7 @@ int main( int argc, char** argv )
 
         puSetAttribute( puGetObjectFromCollection( g_pCol, CS_DBCOPYMSGBOX ), PUA_WINDOW_OPENED, FALSE );
 
-        if (pAppMsg->Message == CSAM_OK )
+        if( pAppMsg->Message == CSAM_OK )
         {
 
             puSetAttribute( puGetObjectFromCollection( g_pCol, CS_CREATINGDBMSGBOX ), PUA_WINDOW_OPENED, TRUE );
@@ -276,16 +282,17 @@ int main( int argc, char** argv )
     }
 
     // Create mutex
-    if( ( g_Mutex = CreateMutex( NULL, FALSE, "ClickSaver")) == INVALID_HANDLE_VALUE )
+    if( ( g_Mutex = CreateMutex( NULL, FALSE, "ClickSaver" ) ) == INVALID_HANDLE_VALUE )
     {
         DisplayErrorMessage( "Couldn't create mutex.", FALSE );
         ReleaseAODatabase();
         CleanUp();
         return -1;
     }
-    if ( GetLastError() == ERROR_ALREADY_EXISTS ) {
+    if( GetLastError() == ERROR_ALREADY_EXISTS )
+    {
         HWND hWnd;
-        if (hWnd = FindWindow ( "ClickSaverHookWindowClass", "ClickSaverHookWindow" ))
+        if( hWnd = FindWindow( "ClickSaverHookWindowClass", "ClickSaverHookWindow" ) )
         {
             // send some message
             return -1;
@@ -300,12 +307,12 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    MissionControls[0] = puGetObjectFromCollection( g_pCol, CS_MISSION1 );
-    MissionControls[1] = puGetObjectFromCollection( g_pCol, CS_MISSION2 );
-    MissionControls[2] = puGetObjectFromCollection( g_pCol, CS_MISSION3 );
-    MissionControls[3] = puGetObjectFromCollection( g_pCol, CS_MISSION4 );
-    MissionControls[4] = puGetObjectFromCollection( g_pCol, CS_MISSION5 );
-//  puSetAttribute( puGetObjectFromCollection( g_pCol, CS_OPTIONSFOLD3 ), PUA_FOLD_FOLDED, TRUE);
+    MissionControls[ 0 ] = puGetObjectFromCollection( g_pCol, CS_MISSION1 );
+    MissionControls[ 1 ] = puGetObjectFromCollection( g_pCol, CS_MISSION2 );
+    MissionControls[ 2 ] = puGetObjectFromCollection( g_pCol, CS_MISSION3 );
+    MissionControls[ 3 ] = puGetObjectFromCollection( g_pCol, CS_MISSION4 );
+    MissionControls[ 4 ] = puGetObjectFromCollection( g_pCol, CS_MISSION5 );
+    //puSetAttribute( puGetObjectFromCollection( g_pCol, CS_OPTIONSFOLD3 ), PUA_FOLD_FOLDED, TRUE);
     puSetAttribute( g_MainWin, PUA_WINDOW_OPENED, TRUE );
 
     do
@@ -314,338 +321,361 @@ int main( int argc, char** argv )
 
         switch( pAppMsg->Message )
         {
-            case CSAM_STOPBUYINGAGENT:
-                g_BuyingAgentCount = 0;
-                g_BuyingAgentMissions = 0;
-                EndBuyingAgent();
+        case CSAM_STOPBUYINGAGENT:
+            g_BuyingAgentCount = 0;
+            g_BuyingAgentMissions = 0;
+            EndBuyingAgent();
 
-                // Fall through
+            // Fall through
 
-            case CSAM_NEWMISSIONS:
-                if (!g_BuyingAgentCount && g_bFullscreen)
+        case CSAM_NEWMISSIONS:
+            if( !g_BuyingAgentCount && g_bFullscreen )
+            {
+                g_BuyingAgentCount = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
+            }
+            if( g_BuyingAgentCount )
+            {
+                g_BuyingAgentCount--;
+                pMissionData = g_CurrentPacket;
+
+                WaitForSingleObject( g_Mutex, INFINITE );
+                g_FoundMish = 255;
+                for( g_MishNumber = 0; g_MishNumber < 5; g_MishNumber++ )
                 {
-                    g_BuyingAgentCount =  puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
+                    if( !( pMissionData = (void*)puDoMethod( MissionControls[ g_MishNumber ], CSM_MISSION_PARSEMISSION, (PUU32)pMissionData, 0 ) ) )
+                    {
+                        break;
+                    }
                 }
-                if( g_BuyingAgentCount )
+                ReleaseMutex( g_Mutex );
+
+                //if( pMissionData )
+                //{
+                    if( g_BuyingAgentCount )
+                    {
+                        BuyingAgent();
+                    }
+                    else
+                    {
+                        EndBuyingAgent();
+                    }
+                //}
+            }
+
+            if( !g_BuyingAgentCount )
+            {
+                pMissionData = g_CurrentPacket;
+                puSetAttribute( g_MainWin, PUA_WINDOW_DEFERUPDATE, TRUE );
+
+                WaitForSingleObject( g_Mutex, INFINITE );
+                g_FoundMish = 255;
+                for( g_MishNumber = 0; g_MishNumber < 5; g_MishNumber++ )
                 {
-                    g_BuyingAgentCount--;
-                    pMissionData = g_CurrentPacket;
-
-                    WaitForSingleObject( g_Mutex, INFINITE );
-                    g_FoundMish = 255;
-                    for( g_MishNumber = 0; g_MishNumber < 5; g_MishNumber++ )
-                        if( !( pMissionData = ( void* )puDoMethod( MissionControls[g_MishNumber], CSM_MISSION_PARSEMISSION, ( PUU32 )pMissionData, 0 ) ) )
-                            break;
-                    ReleaseMutex( g_Mutex );
-
-//                  if( pMissionData )
-//                  {
-                        if( g_BuyingAgentCount )
-                            BuyingAgent();
-                        else
-                            EndBuyingAgent();
-//                  }
+                    void *pLastMissionData;
+                    pLastMissionData = pMissionData;
+                    if( !( pMissionData = (void*)puDoMethod( MissionControls[ g_MishNumber ], CSM_MISSION_PARSEMISSION, (PUU32)pMissionData, 0 ) ) )
+                    {
+                        pMissionData = pLastMissionData;
+                    }
                 }
 
-                if( !g_BuyingAgentCount )
+                ReleaseMutex( g_Mutex );
+
+                if( pMissionData && !g_bFullscreen )
                 {
-                    pMissionData = g_CurrentPacket;
-                    puSetAttribute( g_MainWin, PUA_WINDOW_DEFERUPDATE, TRUE );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
 
-                    WaitForSingleObject( g_Mutex, INFINITE );
-                    g_FoundMish = 255;
-                    for( g_MishNumber = 0; g_MishNumber < 5; g_MishNumber++ )
+                    // Select mission tab
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TABS ), PUA_REGISTER_CURRENTTAB, 0 );
+
+                    // Uniconify window
+                    puSetAttribute( g_MainWin, PUA_WINDOW_ICONIFIED, FALSE );
+                }
+
+                puSetAttribute( g_MainWin, PUA_WINDOW_DEFERUPDATE, FALSE );
+
+                if( PUL_GET_CB( CS_SOUNDS_CB ) )
+                {
+                    if( g_FoundMish == 255 ) // Not Found
                     {
-                        void *pLastMissionData;
-                        pLastMissionData = pMissionData;
-                        if( !( pMissionData = ( void* )puDoMethod( MissionControls[g_MishNumber], CSM_MISSION_PARSEMISSION, ( PUU32 )pMissionData, 0 ) ) )
+                        PlaySound( "notfound.wav", NULL, SND_FILENAME | SND_NODEFAULT );
+                    }
+                    else
+                    {
+                        PlaySound( "found.wav", NULL, SND_FILENAME | SND_NODEFAULT );
+                    }
+                }
+                if( PUL_GET_CB( CS_MOUSEMOVE_CB ) || g_BuyingAgentMissions )
+                {
+                    HWND AOWnd;
+                    POINT MousePos;
+                    LPARAM lParam;
+
+                    WriteLog( NULL );
+
+                    // Find AO window
+                    if( !( AOWnd = FindWindow( "Anarchy client", NULL ) ) )
+                    {
+                        DisplayErrorMessage( "Anarchy Online is not running.", TRUE );
+                        g_BuyingAgentCount = 0;
+                    }
+
+                    if( g_FoundMish != 255 && !( pAppMsg->Message == CSAM_STOPBUYINGAGENT ) )
+                    { // Move mouse and select mission that finished our Buying Agent
+                        MousePos.x = 44 + ( ( g_FoundMish % 3 ) * 58 );
+                        MousePos.y = 57 + ( ( g_FoundMish / 3 ) * 57 );
+                        lParam = MousePos.y << 16 | MousePos.x;
+
+                        ClientToScreen( AOWnd, &MousePos );
+                        SetCursorPos( MousePos.x, MousePos.y );
+
+                        SendMessage( AOWnd, WM_LBUTTONDOWN, 0, lParam );
+                        Sleep( 500 );
+                        SendMessage( AOWnd, WM_LBUTTONUP, 0, lParam );
+
+                        Sleep( 2010 );
+
+                        MousePos.x = 76; MousePos.y = 321;
+                        lParam = MousePos.y << 16 | MousePos.x;
+                        ClientToScreen( AOWnd, &MousePos );
+                        SetCursorPos( MousePos.x, MousePos.y );
+                        if( g_BuyingAgentMissions )
                         {
-                            pMissionData = pLastMissionData;
-                        }
-                    }
-
-                    ReleaseMutex( g_Mutex );
-
-                    if( pMissionData && !g_bFullscreen)
-                    {
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
-
-                        // Select mission tab
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TABS ), PUA_REGISTER_CURRENTTAB, 0 );
-
-                        // Uniconify window
-                        puSetAttribute( g_MainWin, PUA_WINDOW_ICONIFIED, FALSE );
-                    }
-
-                    puSetAttribute( g_MainWin, PUA_WINDOW_DEFERUPDATE, FALSE );
-
-                    if (PUL_GET_CB(CS_SOUNDS_CB))
-                    {
-                        if (g_FoundMish == 255) // Not Found
-                            PlaySound("notfound.wav", NULL, SND_FILENAME | SND_NODEFAULT);
-                        else
-                            PlaySound("found.wav", NULL, SND_FILENAME | SND_NODEFAULT);
-                    }
-                    if (PUL_GET_CB(CS_MOUSEMOVE_CB) || g_BuyingAgentMissions)
-                    {
-                        HWND AOWnd;
-                        POINT MousePos;
-                        LPARAM lParam;
-
-                        WriteLog(NULL);
-
-                        // Find AO window
-                        if( !( AOWnd = FindWindow( "Anarchy client", NULL ) ) )
-                        {
-                            DisplayErrorMessage( "Anarchy Online is not running.", TRUE );
-                            g_BuyingAgentCount = 0;
-                        }
-
-                        if (g_FoundMish != 255 && !(pAppMsg->Message==CSAM_STOPBUYINGAGENT)) { // Move mouse and select mission that finished our Buying Agent
-                            MousePos.x = 44 + ((g_FoundMish % 3) * 58);
-                            MousePos.y = 57 + ((g_FoundMish / 3) * 57);
-                            lParam = MousePos.y << 16 | MousePos.x;
-
-                            ClientToScreen( AOWnd, &MousePos );
-                            SetCursorPos( MousePos.x, MousePos.y );
-
                             SendMessage( AOWnd, WM_LBUTTONDOWN, 0, lParam );
-                            Sleep(500);
+                            Sleep( 500 );
                             SendMessage( AOWnd, WM_LBUTTONUP, 0, lParam );
 
                             Sleep( 2010 );
 
-                            MousePos.x = 76; MousePos.y = 321;
-                            lParam = MousePos.y << 16 | MousePos.x;
-                            ClientToScreen( AOWnd, &MousePos );
-                            SetCursorPos( MousePos.x, MousePos.y );
-                          if (g_BuyingAgentMissions)
-                          {
-                            SendMessage( AOWnd, WM_LBUTTONDOWN, 0, lParam );
-                            Sleep(500);
-                            SendMessage( AOWnd, WM_LBUTTONUP, 0, lParam );
-
-                            Sleep( 2010 );
-
-                            SendMessage( AOWnd, WM_KEYDOWN, 0x45, 0);
-                            Sleep(500);
-                            SendMessage( AOWnd, WM_KEYUP, 0x45, 0);
+                            SendMessage( AOWnd, WM_KEYDOWN, 0x45, 0 );
+                            Sleep( 500 );
+                            SendMessage( AOWnd, WM_KEYUP, 0x45, 0 );
 
                             Sleep( 2010 );
 
                             {
-                                int easy_hard = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD), PUA_TEXTENTRY_VALUE );
+                                int easy_hard = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD ), PUA_TEXTENTRY_VALUE );
+                                int good_bad = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD ), PUA_TEXTENTRY_VALUE );
+                                int order_chaos = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS ), PUA_TEXTENTRY_VALUE );
+                                int open_hidden = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN ), PUA_TEXTENTRY_VALUE );
+                                int phys_myst = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST ), PUA_TEXTENTRY_VALUE );
+                                int headon_stealth = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH ), PUA_TEXTENTRY_VALUE );
+                                int money_xp = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP ), PUA_TEXTENTRY_VALUE );
 
-                                int good_bad = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD), PUA_TEXTENTRY_VALUE );
-
-                                int order_chaos = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS), PUA_TEXTENTRY_VALUE );
-
-                                int open_hidden = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN), PUA_TEXTENTRY_VALUE );
-
-                                int phys_myst = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST), PUA_TEXTENTRY_VALUE );
-
-                                int headon_stealth = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH), PUA_TEXTENTRY_VALUE );
-
-                                int money_xp = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP), PUA_TEXTENTRY_VALUE );
-
-
-
-                                _setSliders(easy_hard, good_bad, order_chaos, open_hidden, phys_myst, headon_stealth, money_xp);
+                                _setSliders( easy_hard, good_bad, order_chaos, open_hidden, phys_myst, headon_stealth, money_xp );
                             }
 
                             g_bFirstRound = TRUE;
-                            g_BuyingAgentCount =  puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
+                            g_BuyingAgentCount = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
                             BuyingAgent();
                             g_BuyingAgentMissions--;
-                          }
                         }
-
                     }
-                    WriteLog(NULL); // Close log file at this point
                 }
+                WriteLog( NULL ); // Close log file at this point
+            }
+            break;
+
+        case CSAM_PRESTARTBUYINGAGENT:
+            if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) )
+            {
+                puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_INFOWINDOW ), PUA_WINDOW_OPENED, TRUE );
                 break;
+            }
 
-            case CSAM_PRESTARTBUYINGAGENT:
-                if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) )
+            // Fall through
+
+        case CSAM_STARTBUYINGAGENT:
+            puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_INFOWINDOW ), PUA_WINDOW_OPENED, FALSE );
+
+            if( !g_BuyingAgentCount )
+            {
+                PUU32 bItemListOk = FALSE, bLocListOk = FALSE, bTypeListOk = FALSE;
+                PUU32 bWarnItem, bWarnLoc, bWarnType;
+                PUU32 bReadyToGo = FALSE;
+
+                puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
+
+                // Make sure that there's something in the relevant watch list
+                // (depending on the mission condition settings)
+                // before starting eating up player's credits for nothing :)
+                bWarnItem = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED );
+                bWarnLoc = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED );
+                bWarnType = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED );
+
+                if( puGetAttribute( g_ItemWatchList, PUA_TABLE_NUMRECORDS ) )
                 {
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_INFOWINDOW ), PUA_WINDOW_OPENED, TRUE );
-                    break;
+                    bItemListOk = TRUE;
                 }
 
-                // Fall through
-
-            case CSAM_STARTBUYINGAGENT:
-                puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_INFOWINDOW ), PUA_WINDOW_OPENED, FALSE );
-
-                if( !g_BuyingAgentCount )
+                if( puGetAttribute( g_LocWatchList, PUA_TABLE_NUMRECORDS ) )
                 {
-                    PUU32 bItemListOk = FALSE, bLocListOk = FALSE, bTypeListOk = FALSE;
-                    PUU32 bWarnItem, bWarnLoc, bWarnType;
-                    PUU32 bReadyToGo = FALSE;
-
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
-
-                    // Make sure that there's something in the relevant watch list
-                    // (depending on the mission condition settings)
-                    // before starting eating up player's credits for nothing :)
-                    bWarnItem = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED );
-                    bWarnLoc = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED );
-                    bWarnType = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED );
-
-                    if( puGetAttribute( g_ItemWatchList, PUA_TABLE_NUMRECORDS ) )
-                        bItemListOk = TRUE;
-
-                    if( puGetAttribute( g_LocWatchList, PUA_TABLE_NUMRECORDS ) )
-                        bLocListOk = TRUE;
-
-                    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB) ,PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB), PUA_CHECKBOX_CHECKED))
-                        bTypeListOk = TRUE;
-
-                    bReadyToGo = bWarnLoc || bWarnItem || bWarnType;
-                    if (bWarnItem) bReadyToGo = bReadyToGo && bItemListOk;
-                    if (bWarnLoc) bReadyToGo = bReadyToGo && bLocListOk;
-                    if (bWarnType) bReadyToGo = bReadyToGo && bTypeListOk;
-
-                    if( bReadyToGo )
-                    {
-                        g_BuyingAgentMissions = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTMISH ), PUA_TEXTENTRY_VALUE ) - 1;
-                        g_BuyingAgentCount =  puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
-                        g_bFirstRound = TRUE;
-                        BuyingAgent();
-                    }
-                    else
-                        // Complain to the user that he/she hasn't told us what to search for
-                        DisplayErrorMessage( "I won't ever find any mission with your current settings and watch lists.", TRUE );
-                }
-                break;
-
-            case CSAM_EXPORTSETTINGS:
-                {
-                    char buffer[2000];
-                    if (GetFile(( HWND )puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_HANDLE )
-                            , TRUE, buffer,2000))
-                        ExportSettings(buffer);
-                    SetCurrentDirectory( g_CSDir );
-                }
-                break;
-
-            case CSAM_IMPORTSETTINGS:
-                {
-                    char buffer[2000];
-                    if (GetFile(( HWND )puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_HANDLE )
-                            , FALSE, buffer,2000))
-                        ImportSettings(buffer);
-                    SetCurrentDirectory( g_CSDir );
-                }
-                break;
-
-            case CSAM_STOPFULLSCREEN:
-                    g_bFullscreen = 0;
-                    puSetAttribute( puGetObjectFromCollection(g_pCol, CS_FULLSCREEN_WINDOW), PUA_WINDOW_OPENED, FALSE);
-                    puSetAttribute( puGetObjectFromCollection(g_pCol, CS_MAIN_WINDOW), PUA_WINDOW_OPENED, TRUE);
-                    break;
-
-            case CSAM_STARTFULLSCREEN:
-                {
-                    PUU32 bItemListOk = FALSE, bLocListOk = FALSE, bTypeListOk = FALSE;
-                    PUU32 bWarnItem, bWarnLoc, bWarnType;
-                    PUU32 bReadyToGo = FALSE;
-
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
-
-                    // Make sure that there's something in the relevant watch list
-                    // (depending on the mission condition settings)
-                    // before starting eating up player's credits for nothing :)
-                    bWarnItem = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED );
-                    bWarnLoc = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED );
-                    bWarnType = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED );
-
-                    if( puGetAttribute( g_ItemWatchList, PUA_TABLE_NUMRECORDS ) )
-                        bItemListOk = TRUE;
-
-                    if( puGetAttribute( g_LocWatchList, PUA_TABLE_NUMRECORDS ) )
-                        bLocListOk = TRUE;
-
-                    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB), PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB) ,PUA_CHECKBOX_CHECKED) ||
-                        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB), PUA_CHECKBOX_CHECKED))
-                        bTypeListOk = TRUE;
-
-                    bReadyToGo = bWarnLoc || bWarnItem || bWarnType;
-                    if (bWarnItem) bReadyToGo = bReadyToGo && bItemListOk;
-                    if (bWarnLoc) bReadyToGo = bReadyToGo && bLocListOk;
-                    if (bWarnType) bReadyToGo = bReadyToGo && bTypeListOk;
-
-                    if( bReadyToGo )
-                    {
-                        puSetAttribute( puGetObjectFromCollection(g_pCol, CS_FULLSCREEN_WINDOW), PUA_WINDOW_OPENED, TRUE);
-                        puSetAttribute( puGetObjectFromCollection(g_pCol, CS_MAIN_WINDOW), PUA_WINDOW_OPENED, FALSE);
-                        g_bFullscreen=1;
-                    }
-                    else
-                        // Complain to the user that he/she hasn't told us what to search for
-                        DisplayErrorMessage( "I won't ever find any mission with your current settings and watch lists.", TRUE );
-                }
-                break;
-
-            case CSAM_SET_SLIDERS:
-
-                {
-
-                    int easy_hard = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD), PUA_TEXTENTRY_VALUE );
-
-                    int good_bad = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD), PUA_TEXTENTRY_VALUE );
-
-                    int order_chaos = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS), PUA_TEXTENTRY_VALUE );
-
-                    int open_hidden = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN), PUA_TEXTENTRY_VALUE );
-
-                    int phys_myst = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST), PUA_TEXTENTRY_VALUE );
-
-                    int headon_stealth = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH), PUA_TEXTENTRY_VALUE );
-
-                    int money_xp = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP), PUA_TEXTENTRY_VALUE );
-
-                    _setSliders(easy_hard, good_bad, order_chaos, open_hidden, phys_myst, headon_stealth, money_xp);
-
+                    bLocListOk = TRUE;
                 }
 
-                break;
+                if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED ) ||
+                    puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED ) ||
+                    puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED ) ||
+                    puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED ) ||
+                    puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED ) )
+                {
+                    bTypeListOk = TRUE;
+                }
+
+                bReadyToGo = bWarnLoc || bWarnItem || bWarnType;
+                if( bWarnItem ) bReadyToGo = bReadyToGo && bItemListOk;
+                if( bWarnLoc ) bReadyToGo = bReadyToGo && bLocListOk;
+                if( bWarnType ) bReadyToGo = bReadyToGo && bTypeListOk;
+
+                if( bReadyToGo )
+                {
+                    g_BuyingAgentMissions = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTMISH ), PUA_TEXTENTRY_VALUE ) - 1;
+                    g_BuyingAgentCount = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE );
+                    g_bFirstRound = TRUE;
+                    BuyingAgent();
+                }
+                else
+                {
+                    // Complain to the user that he/she hasn't told us what to search for
+                    DisplayErrorMessage( "I won't ever find any mission with your current settings and watch lists.", TRUE );
+                }
+            }
+            break;
+
+        case CSAM_EXPORTSETTINGS:
+        {
+            char buffer[ 2000 ];
+            if( GetFile( (HWND)puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_HANDLE )
+                , TRUE, buffer, 2000 ) )
+            {
+                ExportSettings( buffer );
+            }
+            SetCurrentDirectory( g_CSDir );
         }
-    } while( pAppMsg->Message != CSAM_QUIT );
+        break;
 
-    WriteDebug(NULL);
+        case CSAM_IMPORTSETTINGS:
+        {
+            char buffer[ 2000 ];
+            if( GetFile( (HWND)puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_HANDLE )
+                , FALSE, buffer, 2000 ) )
+            {
+                ImportSettings( buffer );
+            }
+            SetCurrentDirectory( g_CSDir );
+        }
+        break;
+
+        case CSAM_STOPFULLSCREEN:
+            g_bFullscreen = 0;
+            puSetAttribute( puGetObjectFromCollection( g_pCol, CS_FULLSCREEN_WINDOW ), PUA_WINDOW_OPENED, FALSE );
+            puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_OPENED, TRUE );
+            break;
+
+        case CSAM_STARTFULLSCREEN:
+        {
+            PUU32 bItemListOk = FALSE, bLocListOk = FALSE, bTypeListOk = FALSE;
+            PUU32 bWarnItem, bWarnLoc, bWarnType;
+            PUU32 bReadyToGo = FALSE;
+
+            puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, FALSE );
+
+            // Make sure that there's something in the relevant watch list
+            // (depending on the mission condition settings)
+            // before starting eating up player's credits for nothing :)
+            bWarnItem = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED );
+            bWarnLoc = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED );
+            bWarnType = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED );
+
+            if( puGetAttribute( g_ItemWatchList, PUA_TABLE_NUMRECORDS ) )
+            {
+                bItemListOk = TRUE;
+            }
+
+            if( puGetAttribute( g_LocWatchList, PUA_TABLE_NUMRECORDS ) )
+            {
+                bLocListOk = TRUE;
+            }
+
+            if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED ) ||
+                puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED ) ||
+                puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED ) ||
+                puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED ) ||
+                puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED ) )
+            {
+                bTypeListOk = TRUE;
+            }
+
+            bReadyToGo = bWarnLoc || bWarnItem || bWarnType;
+            if( bWarnItem ) bReadyToGo = bReadyToGo && bItemListOk;
+            if( bWarnLoc ) bReadyToGo = bReadyToGo && bLocListOk;
+            if( bWarnType ) bReadyToGo = bReadyToGo && bTypeListOk;
+
+            if( bReadyToGo )
+            {
+                puSetAttribute( puGetObjectFromCollection( g_pCol, CS_FULLSCREEN_WINDOW ), PUA_WINDOW_OPENED, TRUE );
+                puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW ), PUA_WINDOW_OPENED, FALSE );
+                g_bFullscreen = 1;
+            }
+            else
+            {
+                // Complain to the user that he/she hasn't told us what to search for
+                DisplayErrorMessage( "I won't ever find any mission with your current settings and watch lists.", TRUE );
+            }
+        }
+        break;
+
+        case CSAM_SET_SLIDERS:
+        {
+            int easy_hard = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD ), PUA_TEXTENTRY_VALUE );
+            int good_bad = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD ), PUA_TEXTENTRY_VALUE );
+            int order_chaos = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS ), PUA_TEXTENTRY_VALUE );
+            int open_hidden = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN ), PUA_TEXTENTRY_VALUE );
+            int phys_myst = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST ), PUA_TEXTENTRY_VALUE );
+            int headon_stealth = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH ), PUA_TEXTENTRY_VALUE );
+            int money_xp = puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP ), PUA_TEXTENTRY_VALUE );
+
+            _setSliders( easy_hard, good_bad, order_chaos, open_hidden, phys_myst, headon_stealth, money_xp );
+        }
+        break;
+        }
+    }
+    while( pAppMsg->Message != CSAM_QUIT );
+
+    WriteDebug( NULL );
 
     SetCurrentDirectory( g_CSDir );
 
-    ExportSettings("LastSettings.cs");
+    ExportSettings( "LastSettings.cs" );
 
 
-//  ReleaseAODatabase();
+    //ReleaseAODatabase();
     CleanUp();
     return 0;
 }
 
+
 void CleanUp()
 {
     if( g_Thread != INVALID_HANDLE_VALUE )
+    {
         TerminateThread( g_Thread, 0 );
+    }
 
     if( g_Mutex != INVALID_HANDLE_VALUE )
+    {
         CloseHandle( g_Mutex );
+    }
 
     if( g_pDB )
+    {
         g_pDB->close( g_pDB, 0 );
+    }
 
     puDeleteObjectCollection( g_pCol );
     puClear();
 }
+
 
 enum
 {
@@ -678,14 +708,14 @@ enum
     CFG_SLIDER_MONEY_XP,
 
     CFG_BUYMOD,
-
 };
+
 
 struct
 {
     int id;
     char* keyword;
-} CfgKeywords[]=
+} CfgKeywords[] =
 {
     { CFG_AODIR, "AODIR" },
     { CFG_SOUNDS, "SOUNDS" },
@@ -721,13 +751,14 @@ struct
     { 0, NULL }
 };
 
-void ImportSettings(char *filename)
+
+void ImportSettings( char* filename )
 {
     FILE* fp;
     PUU32 Record;
     PUU8* pString;
-    char buffer[1000];
-    PUU8 Keyword[256], Value[256];
+    char buffer[ 1000 ];
+    PUU8 Keyword[ 256 ], Value[ 256 ];
     int Id, i;
     PUU32 Val;
     int mode = ISM_DONE;
@@ -747,34 +778,37 @@ void ImportSettings(char *filename)
     }
 
     if( !( fp = fopen( filename, "r" ) ) )
-        return;
-
-    while (fgets(buffer, 1000, fp))
     {
-        if (sscanf(buffer,"::%s", &buffer) == 1)
-        {
-            strtok(buffer,":");
-            if (!stricmp(buffer, "Config")) mode = ISM_CONFIG;
-            if (!stricmp(buffer, "LocWatch")) mode = ISM_LOCWATCH;
-            if (!stricmp(buffer, "ItemWatch")) mode = ISM_ITEMWATCH;
+        return;
+    }
 
-            if (!stricmp(buffer, "Sliders")) mode = ISM_SLIDERS;
-            if (!stricmp(buffer, "Done")) mode = ISM_DONE;
+    while( fgets( buffer, 1000, fp ) )
+    {
+        if( sscanf( buffer, "::%s", &buffer ) == 1 )
+        {
+            strtok( buffer, ":" );
+            if( !stricmp( buffer, "Config" ) ) mode = ISM_CONFIG;
+            if( !stricmp( buffer, "LocWatch" ) ) mode = ISM_LOCWATCH;
+            if( !stricmp( buffer, "ItemWatch" ) ) mode = ISM_ITEMWATCH;
+
+            if( !stricmp( buffer, "Sliders" ) ) mode = ISM_SLIDERS;
+            if( !stricmp( buffer, "Done" ) ) mode = ISM_DONE;
             continue;
         }
-        switch(mode)
+        switch( mode )
         {
         case ISM_DONE:
             break;
+
         case ISM_CONFIG:
-            if (sscanf( buffer, "%[^:]::%[^\n]\n", Keyword, Value ) != EOF )
+            if( sscanf( buffer, "%[^:]::%[^\n]\n", Keyword, Value ) != EOF )
             {
                 i = 0, Id = -1;
-                while( CfgKeywords[i].keyword )
+                while( CfgKeywords[ i ].keyword )
                 {
-                    if( !strcmp( Keyword, CfgKeywords[i].keyword ) )
+                    if( !strcmp( Keyword, CfgKeywords[ i ].keyword ) )
                     {
-                        Id = CfgKeywords[i].id;
+                        Id = CfgKeywords[ i ].id;
                         break;
                     }
 
@@ -790,13 +824,17 @@ void ImportSettings(char *filename)
                 case CFG_WINDOWX:
                     sscanf( Value, "%d", &Val );
                     if( Val < 16384 )
+                    {
                         puSetAttribute( g_MainWin, PUA_WINDOW_XPOS, Val );
+                    }
                     break;
 
                 case CFG_WINDOWY:
                     sscanf( Value, "%d", &Val );
                     if( Val < 16384 )
+                    {
                         puSetAttribute( g_MainWin, PUA_WINDOW_YPOS, Val );
+                    }
                     break;
 
                 case CFG_WINDOWWIDTH:
@@ -806,52 +844,52 @@ void ImportSettings(char *filename)
 
                 case CFG_STARTMINIMIZED:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_WATCHMSGBOX:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_BUYINGAGENTSHOWHELP:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_SOUNDS:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_MOUSEMOVE:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_EXPAND:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_LOG:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTITEM:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTLOC:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTTYPE:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED, (Val ? TRUE : FALSE) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_BUYINGAGENTMAXTRIES:
@@ -866,18 +904,18 @@ void ImportSettings(char *filename)
 
                 case CFG_MISSIONTYPES:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB), PUA_CHECKBOX_CHECKED, (Val & 0x01 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB), PUA_CHECKBOX_CHECKED, (Val & 0x02 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED, (Val & 0x04 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED, (Val & 0x08 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB   ), PUA_CHECKBOX_CHECKED, (Val & 0x10 ? TRUE : FALSE));
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x08 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x10 ? TRUE : FALSE ) );
                     break;
 
                 case CFG_HIGHLIGHTOPTS:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB), PUA_CHECKBOX_CHECKED, (Val & 0x01 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED, (Val & 0x02 ? TRUE : FALSE));
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB), PUA_CHECKBOX_CHECKED, (Val & 0x04 ? TRUE : FALSE));
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
                     break;
 
                 case CFG_SLIDER_EASY_HARD:
@@ -888,27 +926,28 @@ void ImportSettings(char *filename)
                 case CFG_SLIDER_HEADON_STEALTH:
                 case CFG_SLIDER_MONEY_XP:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD + (Id - CFG_SLIDER_EASY_HARD)), PUA_TEXTENTRY_VALUE, Val );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD + ( Id - CFG_SLIDER_EASY_HARD ) ), PUA_TEXTENTRY_VALUE, Val );
                     break;
 
                 case CFG_BUYMOD:
                     sscanf( Value, "%d", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD), PUA_TEXTENTRY_VALUE, Val );
-                    break;
-                case CFG_ITEMVALUE:
-                    {
-                        PUU32 a,b,c,d;
-                        sscanf( Value, "%d::%d::%d::%d", &a, &b, &c, &d );
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE), PUA_TEXTENTRY_VALUE, a );
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL), PUA_TEXTENTRY_VALUE, b );
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE), PUA_CHECKBOX_CHECKED, c );
-                        puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL), PUA_CHECKBOX_CHECKED, d );
-                    }
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD ), PUA_TEXTENTRY_VALUE, Val );
                     break;
 
+                case CFG_ITEMVALUE:
+                {
+                    PUU32 a, b, c, d;
+                    sscanf( Value, "%d::%d::%d::%d", &a, &b, &c, &d );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE ), PUA_TEXTENTRY_VALUE, a );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL ), PUA_TEXTENTRY_VALUE, b );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE ), PUA_CHECKBOX_CHECKED, c );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL ), PUA_CHECKBOX_CHECKED, d );
+                }
+                break;
                 }
             }
             break;
+
         case ISM_ITEMWATCH:
         case ISM_LOCWATCH:
 
@@ -918,7 +957,9 @@ void ImportSettings(char *filename)
             {
                 c = *--pString;
                 if( c != ' ' && c != '\t' && c != '\n' )
+                {
                     break;
+                }
             }
 
             *( pString + 1 ) = 0;
@@ -929,7 +970,9 @@ void ImportSettings(char *filename)
             while( c = *pString++ )
             {
                 if( c != ' ' && c != '\t' )
+                {
                     break;
+                }
             }
 
             pString--;
@@ -937,18 +980,17 @@ void ImportSettings(char *filename)
             // If the resulting string isn't empty, add it to the list
             if( *pString )
             {
-                puDoMethod( (mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList), PUM_TABLE_ADDRECORD, 0, 0 );
-                puDoMethod( (mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList), PUM_TABLE_SETFIELDVAL, ( PUU32 )pString, 0 );
+                puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_ADDRECORD, 0, 0 );
+                puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_SETFIELDVAL, (PUU32)pString, 0 );
             }
             break;
 
         }
-
     }
-
 }
 
-void ExportSettings(char *filename)
+
+void ExportSettings( char* filename )
 {
     FILE* fp;
     pusRect Rect;
@@ -957,142 +999,150 @@ void ExportSettings(char *filename)
     unsigned int Val = 0;
     char* myfilename;
 
-    myfilename=malloc(strlen(filename)+5);
-    strcpy(myfilename, filename);
+    myfilename = malloc( strlen( filename ) + 5 );
+    strcpy( myfilename, filename );
 
-    if (!strstr(myfilename, ".cs")) strcat(myfilename, ".cs");
+    if( !strstr( myfilename, ".cs" ) )
+    {
+        strcat( myfilename, ".cs" );
+    }
 
     if( !( fp = fopen( myfilename, "w" ) ) )
     {
-        free(myfilename);
+        free( myfilename );
         return;
     }
-    free(myfilename);
-    fprintf(fp, "::Config::\n");
+    free( myfilename );
+    fprintf( fp, "::Config::\n" );
     fprintf( fp, "AODIR::%s\n", g_AODir );
 
-    puDoMethod( g_MainWin, PUM_WINDOW_GETRECT, ( PUU32 )&Rect, 0 );
+    puDoMethod( g_MainWin, PUM_WINDOW_GETRECT, (PUU32)&Rect, 0 );
     fprintf( fp, "WINDOWX::%d\nWINDOWY::%d\nWINDOWWIDTH::%d\n", Rect.X, Rect.Y, Rect.Width );
 
     fprintf( fp, "STARTMINIMIZED::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "WATCHMSGBOX::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "BUYINGAGENTSHOWHELP::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "SOUNDS::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "EXPAND::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "MOUSEMOVE::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "LOG::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "ALERTITEM::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "ALERTLOC::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "ALERTTYPE::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
 
     fprintf( fp, "BUYINGAGENTMAXTRIES::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "BUYINGAGENTHIDE::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTFOLD ), PUA_FOLD_FOLDED ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTFOLD ), PUA_FOLD_FOLDED ) );
 
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB), PUA_CHECKBOX_CHECKED)) Val |= 0x01;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB), PUA_CHECKBOX_CHECKED)) Val |= 0x02;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED)) Val |= 0x04;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED)) Val |= 0x08;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB   ), PUA_CHECKBOX_CHECKED)) Val |= 0x10;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x01;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x02;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x04;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x08;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x10;
 
-    fprintf( fp, "MISHTYPES::%d\n", Val);
+    fprintf( fp, "MISHTYPES::%d\n", Val );
 
     Val = 0;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB), PUA_CHECKBOX_CHECKED)) Val |= 0x01;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED)) Val |= 0x02;
-    if (puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB), PUA_CHECKBOX_CHECKED)) Val |= 0x04;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x01;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x02;
+    if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x04;
 
-    fprintf( fp, "HIGHLIGHTOPTS::%d\n", Val);
+    fprintf( fp, "HIGHLIGHTOPTS::%d\n", Val );
 
     fprintf( fp, "SLIDER_EASY_HARD::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_GOOD_BAD::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_ORDER_CHAOS::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_OPEN_HIDDEN::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_PHYS_MYST::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_HEADON_STEALTH::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "SLIDER_MONEY_XP::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "BUYMOD::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD), PUA_TEXTENTRY_VALUE ) );
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD ), PUA_TEXTENTRY_VALUE ) );
 
     fprintf( fp, "ITEMVALUE::%d::%d::%d::%d\n",
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE), PUA_TEXTENTRY_VALUE ),
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL), PUA_TEXTENTRY_VALUE ),
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE), PUA_CHECKBOX_CHECKED ),
-        puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL), PUA_CHECKBOX_CHECKED ));
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE ), PUA_TEXTENTRY_VALUE ),
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL ), PUA_TEXTENTRY_VALUE ),
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE ), PUA_CHECKBOX_CHECKED ),
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MTOTAL ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf(fp, "::ItemWatch::\n");
-        Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
-        while( Record )
+    fprintf( fp, "::ItemWatch::\n" );
+    Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
+    while( Record )
+    {
+        if( pString = (PUU8*)puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIELDVAL, Record, 0 ) )
         {
-            if( pString = ( PUU8* )puDoMethod( g_ItemWatchList, PUM_TABLE_GETFIELDVAL, Record, 0 ) )
-                fprintf( fp, "%s\n", pString );
-
-            Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETNEXTRECORD, Record, 0 );
+            fprintf( fp, "%s\n", pString );
         }
-    fprintf(fp, "::LocWatch::\n");
-        Record = puDoMethod( g_LocWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
-        while( Record )
+
+        Record = puDoMethod( g_ItemWatchList, PUM_TABLE_GETNEXTRECORD, Record, 0 );
+    }
+    fprintf( fp, "::LocWatch::\n" );
+    Record = puDoMethod( g_LocWatchList, PUM_TABLE_GETFIRSTRECORD, 0, 0 );
+    while( Record )
+    {
+        if( pString = (PUU8*)puDoMethod( g_LocWatchList, PUM_TABLE_GETFIELDVAL, Record, 0 ) )
         {
-            if( pString = ( PUU8* )puDoMethod( g_LocWatchList, PUM_TABLE_GETFIELDVAL, Record, 0 ) )
-                fprintf( fp, "%s\n", pString );
-
-            Record = puDoMethod( g_LocWatchList, PUM_TABLE_GETNEXTRECORD, Record, 0 );
+            fprintf( fp, "%s\n", pString );
         }
-    fprintf(fp, "::END::\n");
+
+        Record = puDoMethod( g_LocWatchList, PUM_TABLE_GETNEXTRECORD, Record, 0 );
+    }
+    fprintf( fp, "::END::\n" );
 
     fclose( fp );
-
 }
 
 
 void DisplayErrorMessage( PUU8* _pMessage, PUU32 _bAsynchronous )
 {
-    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_TEXT ), PUA_TEXT_STRING, ( PUU32 )_pMessage );
+    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_TEXT ), PUA_TEXT_STRING, (PUU32)_pMessage );
     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ERROR_WINDOW ), PUA_WINDOW_OPENED, TRUE );
 
     if( !_bAsynchronous )
+    {
         puWaitAppMessages();
+    }
 }
 
 /* Prompt user for folder
    (from AOMD)
- */
-void GetFolder(HWND hWndOwner, char *strTitle, char *strPath)
+*/
+void GetFolder( HWND hWndOwner, char *strTitle, char *strPath )
 {
     BROWSEINFO udtBI;
     ITEMIDLIST *udtIDList;
@@ -1108,40 +1158,51 @@ void GetFolder(HWND hWndOwner, char *strTitle, char *strPath)
     udtBI.iImage = 0;
 
     /* Prompt user for folder */
-    udtIDList = SHBrowseForFolder(&udtBI);
+    udtIDList = SHBrowseForFolder( &udtBI );
 
     /* Extract pathname */
-    if (!SHGetPathFromIDList(udtIDList, strPath))
-        strPath[0] = 0; // Zero-length if failure
+    if( !SHGetPathFromIDList( udtIDList, strPath ) )
+    {
+        strPath[ 0 ] = 0; // Zero-length if failure
+    }
 }
 
-BOOL GetFile(HWND hWndOwner, BOOL saving, char *buffer, int buffersize)
+
+BOOL GetFile( HWND hWndOwner, BOOL saving, char* buffer, int buffersize )
 {
     OPENFILENAME ofn;
 
-    ZeroMemory(&ofn, sizeof(ofn));
+    ZeroMemory( &ofn, sizeof( ofn ) );
 
     /* Initialise */
     ofn.hwndOwner = hWndOwner;
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    if (saving)
-        ofn.Flags=OFN_HIDEREADONLY;
+    ofn.lStructSize = sizeof( OPENFILENAME );
+    if( saving )
+    {
+        ofn.Flags = OFN_HIDEREADONLY;
+    }
     else
-        ofn.Flags=OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+    {
+        ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+    }
 
-    ofn.lpstrFilter="Clicksaver Files\0*.CS\0";
-    ofn.lpstrFile=buffer;
-    ofn.lpstrFile[0]='\0';
-    ofn.nMaxFile=buffersize;
+    ofn.lpstrFilter = "Clicksaver Files\0*.CS\0";
+    ofn.lpstrFile = buffer;
+    ofn.lpstrFile[ 0 ] = '\0';
+    ofn.nMaxFile = buffersize;
     ofn.nFilterIndex = 0;
-    ofn.lpstrInitialDir=ofn.lpstrFileTitle=NULL;
-    ofn.nMaxFileTitle=0;
+    ofn.lpstrInitialDir = ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
 
     /* Prompt user for folder */
-    if (saving)
-        return GetSaveFileName(&ofn);
+    if( saving )
+    {
+        return GetSaveFileName( &ofn );
+    }
     else
-        return GetOpenFileName(&ofn);
+    {
+        return GetOpenFileName( &ofn );
+    }
 
     return FALSE;
 }
@@ -1172,7 +1233,7 @@ int BuyingAgent()
     }
 
     // Close main window
-    if (!g_bFullscreen)
+    if( !g_bFullscreen )
     {
         puSetAttribute( g_MainWin, PUA_WINDOW_OPENED, FALSE );
 
@@ -1180,12 +1241,12 @@ int BuyingAgent()
         puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_WINDOW ), PUA_WINDOW_OPENED, TRUE );
 
         // Set keyboard focus on buying agent window
-        BAWnd = ( HWND )puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_WINDOW ), PUA_WINDOW_HANDLE );
+        BAWnd = (HWND)puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENT_WINDOW ), PUA_WINDOW_HANDLE );
         SetFocus( BAWnd );
     }
 
     // Delay
-//  Sleep( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTDELAY ), PUA_TEXTENTRY_VALUE ) );
+    //Sleep( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTDELAY ), PUA_TEXTENTRY_VALUE ) );
     Sleep( 2010 );
 
     // Force AO on top
@@ -1220,10 +1281,11 @@ int BuyingAgent()
     return TRUE;
 }
 
+
 void EndBuyingAgent()
 {
 
-    if (!g_bFullscreen)
+    if( !g_bFullscreen )
     {
         // Remove keyboard focus
         SetFocus( NULL );
@@ -1237,76 +1299,85 @@ void EndBuyingAgent()
 
 }
 
-void DebugPacket(void *pData, unsigned int length)
-{
-   unsigned int x;
-   unsigned char *data = (char *)pData;
-   char ps[70];
-   for (x=0; x< length; x++)
-   {
-      sprintf(&(ps[x%16 * 3]), "%02X",data[x]);
-      ps[x%16*3+2] = ' ';
-      ps[x%16 + 48] = (data[x]>=32 && data[x]<=127 ? data[x] : '.');
-      ps[x%16 + 49] = '\n';
-      ps[x%16 + 50] = 0;
-      if (x%16 == 15) WriteDebug(ps);
-   }
 
-   if (x%16 != 0) {
-    for (x=x%16; x<16; x++){
-      sprintf(&(ps[x%16 * 3]), "  ");
-      ps[x%16*3+2] = ' ';
+void DebugPacket( void* pData, unsigned int length )
+{
+    unsigned int x;
+    unsigned char *data = (char *)pData;
+    char ps[ 70 ];
+    for( x = 0; x < length; x++ )
+    {
+        sprintf( &( ps[ x % 16 * 3 ] ), "%02X", data[ x ] );
+        ps[ x % 16 * 3 + 2 ] = ' ';
+        ps[ x % 16 + 48 ] = ( data[ x ] >= 32 && data[ x ] <= 127 ? data[ x ] : '.' );
+        ps[ x % 16 + 49 ] = '\n';
+        ps[ x % 16 + 50 ] = 0;
+        if( x % 16 == 15 ) WriteDebug( ps );
     }
-    WriteDebug(ps);
-   }
+
+    if( x % 16 != 0 )
+    {
+        for( x = x % 16; x < 16; x++ )
+        {
+            sprintf( &( ps[ x % 16 * 3 ] ), "  " );
+            ps[ x % 16 * 3 + 2 ] = ' ';
+        }
+        WriteDebug( ps );
+    }
 }
 
-void WriteLog(const char *Format, ...)
+
+void WriteLog( const char* Format, ... )
 {
     va_list argptr;
     static FILE *fp = NULL;
-    if (Format == NULL)
+    if( Format == NULL )
     {
-        if(fp)
+        if( fp )
         {
-            fclose(fp);
+            fclose( fp );
             fp = NULL;
         }
         return;
     }
-    if (PUL_GET_CB(CS_LOG_CB))
+    if( PUL_GET_CB( CS_LOG_CB ) )
     {
-        if (!fp) {
-            fp = fopen("clicksaver.log", "a");
+        if( !fp )
+        {
+            fp = fopen( "clicksaver.log", "a" );
         }
-        va_start(argptr, Format);
-        vfprintf(fp, Format, argptr);
-        va_end(argptr);
+        va_start( argptr, Format );
+        vfprintf( fp, Format, argptr );
+        va_end( argptr );
     }
 }
 
-void WriteDebug(const char *txt)
+
+void WriteDebug( const char* txt )
 {
     /**/
     static FILE *fp = NULL;
-    if (txt == NULL) {
-        if (fp) {
-            fclose(fp);
+    if( txt == NULL )
+    {
+        if( fp )
+        {
+            fclose( fp );
             fp = NULL;
         }
         return;
     }
-    if (!fp) {
-        fp = fopen("clicksaver.debug", "a");
+    if( !fp )
+    {
+        fp = fopen( "clicksaver.debug", "a" );
     }
-    fprintf(fp, "%s", txt);
+    fprintf( fp, "%s", txt );
     /**/
 }
 
 
 //slider setting functions
 
-void _dragMouse(int x0, int y0, int x1, int y1)
+void _dragMouse( int x0, int y0, int x1, int y1 )
 {
     POINT MousePos;
     LPARAM lParam;
@@ -1326,68 +1397,56 @@ void _dragMouse(int x0, int y0, int x1, int y1)
     ClientToScreen( AOWnd, &MousePos );
     SetCursorPos( MousePos.x, MousePos.y );
     SendMessage( AOWnd, WM_LBUTTONDOWN, 0, lParam );
-    Sleep(250);
+    Sleep( 250 );
     MousePos.x = x1;
     MousePos.y = y1;
     lParam = MousePos.y << 16 | MousePos.x;
     ClientToScreen( AOWnd, &MousePos );
     SetCursorPos( MousePos.x, MousePos.y );
     SendMessage( AOWnd, WM_MOUSEMOVE, 0, lParam );
-    Sleep(250);
+    Sleep( 250 );
     SendMessage( AOWnd, WM_LBUTTONUP, 0, lParam );
-    Sleep(250);
+    Sleep( 250 );
 }
 
+
 /*
-
 these coords are from my initial observation with a macro program. they are ofset slightly.
-
 ; options button
-
 ; 200, 185
-
 ; difficulty slider
-
 ; 110, 165
-
 ; 1st slider
-
 ; 110, 210
-
 ; then add 15 pixels in Y for each subsequent row
-
 ; full left slider
-
 ; X = 60
-
 ; full right slider
-
 ; X = 170
-
 */
 
 
-float _linIinterp(float lo, float hi, float ratio)
+float _linIinterp( float lo, float hi, float ratio )
 {
-    return (hi-lo)*ratio + lo;
+    return ( hi - lo )*ratio + lo;
 }
 
 
-void _setSliders(int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp)
+void _setSliders( int easy_hard, int good_bad, int order_chaos, int open_hidden, int phys_myst, int headon_stealth, int money_xp )
 {
     int ypos = 210;
 
     //_dragMouse(200, 165, 200, 165);
-    if (easy_hard != 50) _dragMouse(102, 160, (int)_linIinterp(64, 141, easy_hard/100.0f), 160);
-    if (good_bad != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, good_bad/100.0f), ypos);
+    if( easy_hard != 50 ) _dragMouse( 102, 160, (int)_linIinterp( 64, 141, easy_hard / 100.0f ), 160 );
+    if( good_bad != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, good_bad / 100.0f ), ypos );
     ypos += 18;
-    if (order_chaos != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, order_chaos/100.0f), ypos);
+    if( order_chaos != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, order_chaos / 100.0f ), ypos );
     ypos += 18;
-    if (open_hidden != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, open_hidden/100.0f), ypos);
+    if( open_hidden != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, open_hidden / 100.0f ), ypos );
     ypos += 18;
-    if (phys_myst != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, phys_myst/100.0f), ypos);
+    if( phys_myst != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, phys_myst / 100.0f ), ypos );
     ypos += 18;
-    if (headon_stealth != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, headon_stealth/100.0f), ypos);
+    if( headon_stealth != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, headon_stealth / 100.0f ), ypos );
     ypos += 18;
-    if (money_xp != 50) _dragMouse(102, ypos, (int)_linIinterp(64, 141, money_xp/100.0f), ypos);
+    if( money_xp != 50 ) _dragMouse( 102, ypos, (int)_linIinterp( 64, 141, money_xp / 100.0f ), ypos );
 }
