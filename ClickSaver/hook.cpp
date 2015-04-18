@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <cmath>
 #include <string>
 #include "clicksaver.h"
-#include "Detours/detours.h"
 
 extern "C" HANDLE g_Mutex;
 extern "C" char g_CSDir[ 256 ];
