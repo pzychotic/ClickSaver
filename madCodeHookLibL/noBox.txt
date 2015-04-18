@@ -1,0 +1,7 @@
+If "noBox.htm" doesn't work with your browser, please send a mail to "noBox@madshi.net" manually. Please don't send HTML mails, please use text-only mails instead. Put in your name, company name, eMail address and homepage. The mail body must look something like this:
+
+license=I have read the madCodeHookLibLight license agreement and I do accept it. I'm asking for the modified version of madCodeHookLibLight, which shows no info box. I will use madCodeHookLibLight for non-commercial purpose only.
+company=yourCompanyNameHere
+name=Bernard Example
+email=berni@example.net
+homepage=www.yourCompany.net

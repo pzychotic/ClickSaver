@@ -1,0 +1,13 @@
+LIBRARY MADCODEHOOKLIB.DLL
+
+EXPORTS
+  HookCode@32           = HookCode            @2;
+  HookAPI@36            = HookAPI             @3;
+  UnhookCode@4          = UnhookCode          @4;
+  CreateProcessEx@44    = CreateProcessEx     @5;
+  AllocMemEx@8          = AllocMemEx          @6;
+  FreeMemEx@8           = FreeMemEx           @7;
+  CopyFunction@16       = CopyFunction        @8;
+  CreateRemoteThread@28 = CreateRemoteThread  @9;
+  InjectLibrary@8       = InjectLibrary      @10;
+  ProcessHandleToID@4   = ProcessHandleToID  @11;

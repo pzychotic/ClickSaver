@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{fa796cc9-240d-4ced-be7f-55fba7a0c950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AODB">
+      <UniqueIdentifier>{d73de560-2c3b-4fbb-bfa3-6e126295ab2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{02ac0071-40e4-4dd9-a175-33a830027a3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="clicksaver.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="guidef.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="localdb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="mission.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="AODB\AODB.c">
+      <Filter>src\AODB</Filter>
+    </ClCompile>
+    <ClCompile Include="AODB\ctree.c">
+      <Filter>src\AODB</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AODB\AODB.h">
+      <Filter>src\AODB</Filter>
+    </ClInclude>
+    <ClInclude Include="AODB\ctree.h">
+      <Filter>src\AODB</Filter>
+    </ClInclude>
+    <ClInclude Include="clicksaver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="mission.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="BerkeleyDB\libdb40.lib" />
+    <Library Include="madCodeHookLibL\Dll\madCodeHookLib - microsoft.lib" />
+    <Library Include="zlib\lib\zlibrel.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cs.ico" />
+    <None Include="cs-icon_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ClickSaver.rc" />
+  </ItemGroup>
+</Project>
