@@ -49,12 +49,12 @@ isn't that useful :p)
 
 Installation
 ------------
-There's pretty much nothing needed to install CLickSaver itself.
-Just copy it somewhere. The two DLLs (ctreestd.dll, libdb40.dll and AOHook.dll)
-must be in the same directory as ClickSaver.exe itself.
-(it's recommended to put it all in it's own directory though)
+There's pretty much nothing needed to install ClickSaver itself.
+Just copy it somewhere. Everything must be in the same directory
+(it's recommended to put it all in it's own directory though).
 
-On first run, it asks for AO directory.
+On first run, it asks for AO directory and creates the items database.
+Note that AO has to be closed whenever CS wants to create a new items database.
 
 Usage
 -----
