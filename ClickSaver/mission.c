@@ -649,7 +649,7 @@ PUU32 MissionParse( PULID _Object, MissionClassData* _pData, PUU8* _pMissionData
     bTypeFound = SetAndSearchType( TempVal, puGetObjectFromCollection( _pData->pCol, MISHTYPE ) );
 
     // Write Stuff to log:
-    WriteLog( "mission\t%u\t%u\t%u\t%u\t%u\t%s\n", MishID, time( NULL ), MishQL, XP, Cash, CharKey );
+    WriteLog( "mission\t%u\t%u\t%u\t%u\t%s\n", MishID, MishQL, XP, Cash, CharKey );
     WriteLog( "loc\t%u\t%.1f\t%.1f\t%s\n", MishPF, CoordX, CoordY, PFName );
 
 
