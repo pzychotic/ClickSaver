@@ -417,7 +417,7 @@ PUU32 g_GUIDef[]=
         PUM_ADDCHILD, PU_LABEL( "http://www.ao-universe.com/main.php?site=tools&link=download&action=tools" ),
         PUM_ADDCHILD, PU_LABEL( " " ),
         PUM_ADDCHILD, PU_LABEL( "Some parts are from AOMD 1.4 by Muzzleflash" ),
-        PUM_ADDCHILD, PU_LABEL( "DLL hooking done Microsoft Detours" ),
+        PUM_ADDCHILD, PU_LABEL( "DLL hooking done using Microsoft Detours" ),
         PUM_ADDCHILD, PU_TITLE( "Special thanks to:" ),
         PUM_ADDCHILD, PU_LABEL( "First Order (http://www.firstorder.net)" ),
         PUM_ADDCHILD, PU_LABEL( "All the helpful people on HQ forums" ),
