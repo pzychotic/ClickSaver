@@ -1029,9 +1029,10 @@ with coords x <=500, y>=3000 (but less than 999999)
 ********************************/
 PUU32 LocationMatch( PUU8* LocationName, PUU8* LocationSearch )
 {
-    PUU8 Name[ 256 ], CoordX[ 20 ], CoordY[ 20 ];
-    PUU8 Search[ 256 ], SearchCoordXFrom[ 20 ], SearchCoordXTo[ 20 ],
-        SearchCoordYFrom[ 20 ], SearchCoordYTo[ 20 ];
+    PUU8 Name[ 256 ] = { 0 }, Search[ 256 ] = { 0 };
+    PUU8 CoordX[ 20 ] = { 0 }, CoordY[ 20 ] = { 0 };
+    PUU8 SearchCoordXFrom[ 20 ] = { 0 }, SearchCoordXTo[ 20 ] = { 0 };
+    PUU8 SearchCoordYFrom[ 20 ] = { 0 }, SearchCoordYTo[ 20 ] = { 0 };
     PUU8 *pChar;
     PUU8 c, OpenBracketFlag = FALSE, YCoordFlag = FALSE;
     double x, y, xfrom, xto, yfrom, yto;
