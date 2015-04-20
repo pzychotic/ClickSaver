@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "clicksaver.h"
 
 extern "C" HANDLE g_Mutex;
-extern "C" char g_CSDir[ 256 ];
+extern "C" char g_CSDir[ MAX_PATH ];
 extern "C" char g_CurrentPacket[ 65536 ];
 
 std::string to_ascii_copy( std::wstring const& input )

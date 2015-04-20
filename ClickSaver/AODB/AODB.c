@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 /* Variables */
-char strAODBpath[MAX_PATH];
+char strAODBpath[ MAX_PATH ] = { 0 };
 IFIL udtAODBfile;
 IIDX udtAODBindex;
 ISEG udtAODBseg[2];

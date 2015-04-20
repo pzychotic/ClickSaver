@@ -104,8 +104,8 @@ PUU8 g_bFullscreen = 0;
 
 char g_CurrentPacket[ 65536 ];
 
-char g_AODir[ 256 ] = "";
-char g_CSDir[ 256 ] = "";
+char g_AODir[ MAX_PATH ] = { 0 };
+char g_CSDir[ MAX_PATH ] = { 0 };
 
 HANDLE g_Mutex = INVALID_HANDLE_VALUE;
 HANDLE g_Thread = INVALID_HANDLE_VALUE;
@@ -167,7 +167,7 @@ int main( int argc, char** argv )
     g_LocWatchList = puGetObjectFromCollection( g_pCol, CS_LOCWATCH_LIST );
 
     // Get current directory
-    GetCurrentDirectory( 256, g_CSDir );
+    GetCurrentDirectory( MAX_PATH, g_CSDir );
 
     ImportSettings( "LastSettings.cs" );
 

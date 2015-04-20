@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "AODB/AODB.h"
 #include "AODB/ctree.h"
 
-extern char g_AODir[ 256 ];
+extern char g_AODir[ MAX_PATH ];
 extern DB* g_pDB;
 
 extern IFIL udtAODBfile;
