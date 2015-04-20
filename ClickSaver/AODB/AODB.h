@@ -19,7 +19,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef _AODB_INC
 #define _AODB_INC
 
-#include <pul/types.h>
 
 /* Global Constants */
 #define AODB_ERR_NOERROR    0
@@ -34,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 /* Functions */
 long InitAODatabase( char* strAOFolder );
-//void DecodeDataChunk(PUU8 *a_xData, unsigned long lDataLen);
 void ReleaseAODatabase( void );
+
 
 #endif /* _AODB_INC */

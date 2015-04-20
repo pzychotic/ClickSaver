@@ -17,21 +17,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 #include <windows.h>
-#include <malloc.h>
-//#include "Main.h"
 #include "AODB.h"
 #include "ctree.h"
-//#include "Functions.h"
-#include "../clicksaver.h"
 
-/* Structures */
-typedef unsigned __int64 UINT64;
 
 /* Variables */
 char strAODBpath[MAX_PATH];
 IFIL udtAODBfile;
 IIDX udtAODBindex;
 ISEG udtAODBseg[2];
+
 
 /* Initialise AO Database */
 long InitAODatabase( char* strAOFolder )
@@ -102,27 +97,6 @@ InitAODatabase_Err_noinit:
 InitAODatabase_Err_nodll:
     return iErrVal;
 }
-
-
-/* Decodes data - only required for items */
-/*void DecodeDataChunk(BYTE *a_xData, unsigned long lDataLen)
-{
-    unsigned long lLoop;
-    VRLEN lLength;
-    UINT64 llSeed;
-    BYTE *a_xDataPtr;
-
-    a_xDataPtr = a_xData;
-    lLength = lDataLen;
-    llSeed = *((int *)(a_xData + 4));
-    a_xDataPtr = a_xDataPtr + 0x18;
-    for (lLoop = 0x18; lLoop < lLength; lLoop++) {
-        llSeed = llSeed * (UINT64)(0x1012003);
-        llSeed = llSeed % (UINT64)(0x4e512dc8f);
-        *a_xDataPtr = *a_xDataPtr ^ (BYTE)(llSeed);
-        a_xDataPtr++;
-    }
-}*/
 
 
 /* Release the AO Database */
