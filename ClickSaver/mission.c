@@ -478,11 +478,11 @@ PUU32 MissionParse( PULID _Object, MissionClassData* _pData, PUU8* _pMissionData
 
     puSetAttribute( puGetObjectFromCollection( _pData->pCol, ROOTOBJ ), PUA_CONTROL_HIDDEN, FALSE );
 
-//#ifdef DEBUG_MISSION_PACKETS // Debug Packet
+#ifdef DEBUG_MISSION_PACKETS // Debug Packet
     WriteDebug( "\nMission Header:\n" );
     DebugPacket( _pMissionData, 6 * 4 );
     WriteDebug( 0 );
-//#endif
+#endif
 
     MishID = *(PUU32*)_pMissionData + 0x04;
     MishID = EndianSwap32( MishID );
