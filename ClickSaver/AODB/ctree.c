@@ -16,8 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+#include "../Platform.h"
+
 #define _CTREE_CPP
-#include <windows.h>
 #include "ctree.h"
 
 // Handle of the Ctree DLL.  NULL until it is loaded.

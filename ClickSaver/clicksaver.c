@@ -60,14 +60,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+#include "Platform.h"
+
 #include <pul/pul.h>
 
-// For some reason, it appears not to be defined...
-// I probably have a visual C installation problem,
-// but this is faster than reinstalling it :)
-#define _WIN32_WINNT 0x0500
-
-#include <windows.h>
 #include <winuser.h>
 #include <shlobj.h>
 #include <stdio.h>
@@ -1329,6 +1326,7 @@ void DebugPacket( void* pData, unsigned int length )
 
 void WriteLog( const char* Format, ... )
 {
+    /**/
     va_list argptr;
     static FILE *fp = NULL;
     if( Format == NULL )
@@ -1350,6 +1348,7 @@ void WriteLog( const char* Format, ... )
         vfprintf( fp, Format, argptr );
         va_end( argptr );
     }
+    /**/
 }
 
 

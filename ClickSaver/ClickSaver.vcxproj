@@ -138,6 +138,7 @@
     <ClInclude Include="AODB\ctree.h" />
     <ClInclude Include="clicksaver.h" />
     <ClInclude Include="mission.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
