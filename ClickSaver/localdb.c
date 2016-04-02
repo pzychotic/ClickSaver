@@ -24,7 +24,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#pragma warning( push )
+#pragma warning( disable: 4091 )
 #include <shlobj.h>
+#pragma warning( pop )
 #include "BerkeleyDB/db.h"
 #include "clicksaver.h"
 #include "AODB/AODB.h"
