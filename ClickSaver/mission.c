@@ -1315,7 +1315,7 @@ PUU8 *GetAOIconData( unsigned long lIconNo )
     lChunkLen += 0xC;
     memcpy( strChunkID, ( a_xPNGChunk + 0x4 ), 4 );
     strChunkID[ 4 ] = 0;
-    if( stricmp( strChunkID, "IHDR" ) != 0 )
+    if( _stricmp( strChunkID, "IHDR" ) != 0 )
     {
         goto GetAOIconData_Exit_Fail;
     }
@@ -1347,7 +1347,7 @@ PUU8 *GetAOIconData( unsigned long lIconNo )
     lChunkLen += 0xC;
     memcpy( strChunkID, ( a_xPNGChunk + 0x4 ), 4 );
     strChunkID[ 4 ] = 0;
-    if( stricmp( strChunkID, "SBIT" ) != 0 )
+    if( _stricmp( strChunkID, "SBIT" ) != 0 )
     {
         goto GetAOIconData_Exit_Fail;
     }
@@ -1359,7 +1359,7 @@ PUU8 *GetAOIconData( unsigned long lIconNo )
     lChunkLen = lPNGDataLen + 0xC;
     memcpy( strChunkID, ( a_xPNGChunk + 0x4 ), 4 );
     strChunkID[ 4 ] = 0;
-    if( stricmp( strChunkID, "IDAT" ) != 0 )
+    if( _stricmp( strChunkID, "IDAT" ) != 0 )
     {
         goto GetAOIconData_Exit_Fail;
     }
@@ -1571,7 +1571,7 @@ PNG is RGB but DIB is BGR) */
     /* Check IEND chunk - This marks the end of PNG */
     memcpy( strChunkID, ( a_xPNGChunk + 0x4 ), 4 );
     strChunkID[ 4 ] = 0;
-    if( stricmp( strChunkID, "IEND" ) != 0 )
+    if( _stricmp( strChunkID, "IEND" ) != 0 )
     {
         goto GetAOIconData_Exit_Fail;
     }

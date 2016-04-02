@@ -158,8 +158,8 @@ int main( int argc, char** argv )
     }
 
     g_MainWin = puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW );
-    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon( NULL, IDI_ICON1 ) );
-    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon( NULL, IDI_ICON1 ) );
+    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon( NULL, MAKEINTRESOURCE( IDI_ICON1 ) ) );
+    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon( NULL, MAKEINTRESOURCE( IDI_ICON1 ) ) );
     g_ItemWatchList = puGetObjectFromCollection( g_pCol, CS_ITEMWATCH_LIST );
     g_LocWatchList = puGetObjectFromCollection( g_pCol, CS_LOCWATCH_LIST );
 
@@ -784,12 +784,12 @@ void ImportSettings( char* filename )
         if( sscanf( buffer, "::%s", &buffer ) == 1 )
         {
             strtok( buffer, ":" );
-            if( !stricmp( buffer, "Config" ) ) mode = ISM_CONFIG;
-            if( !stricmp( buffer, "LocWatch" ) ) mode = ISM_LOCWATCH;
-            if( !stricmp( buffer, "ItemWatch" ) ) mode = ISM_ITEMWATCH;
+            if( !_stricmp( buffer, "Config" ) ) mode = ISM_CONFIG;
+            if( !_stricmp( buffer, "LocWatch" ) ) mode = ISM_LOCWATCH;
+            if( !_stricmp( buffer, "ItemWatch" ) ) mode = ISM_ITEMWATCH;
 
-            if( !stricmp( buffer, "Sliders" ) ) mode = ISM_SLIDERS;
-            if( !stricmp( buffer, "Done" ) ) mode = ISM_DONE;
+            if( !_stricmp( buffer, "Sliders" ) ) mode = ISM_SLIDERS;
+            if( !_stricmp( buffer, "Done" ) ) mode = ISM_DONE;
             continue;
         }
         switch( mode )
@@ -1152,7 +1152,7 @@ void GetFolder( HWND hWndOwner, char *strTitle, char *strPath )
     udtBI.lpszTitle = strTitle;
     udtBI.ulFlags = BIF_RETURNONLYFSDIRS;
     udtBI.lpfn = NULL;
-    udtBI.lParam = NULL;
+    udtBI.lParam = 0;
     udtBI.iImage = 0;
 
     /* Prompt user for folder */
