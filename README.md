@@ -6,8 +6,8 @@ This is an *unofficial* fork of ClickSaver (if you want to call the current situ
 
 ## Compilation
 
-The toolchain is currently set to v100 (VS2010) to get CS to also run under WinXP. For some reason it doesn't work with v120_xp, yet.
-The solution should also work directly in VS2010, or any newer VS version as long as the toolchain is set to v100.
+VS2015 with the toolchain set to v140_xp to get CS to also run under WinXP.
+The solution should also work in VS2010 or any newer VS versions.
 
 
 ## Quick history tour

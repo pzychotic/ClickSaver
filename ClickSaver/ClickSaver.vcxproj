@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -12,19 +12,18 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9C4D66F-DE2C-4B1E-828A-EDD8E6F00115}</ProjectGuid>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -60,12 +59,12 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/NODEFAULTLIB:"LIBCD.lib" /NODEFAULTLIB:"LIBC.lib" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>zlibrel.lib;libdb40.lib;PULd.lib;odbc32.lib;odbccp32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;$(SolutionDir)3rdParty/PUL/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -76,6 +75,7 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libc.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Deploy\*.*" "$(OutputPath)"</Command>
@@ -102,12 +102,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/NODEFAULTLIB:"LIBC.lib" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>zlibrel.lib;libdb40.lib;PUL.lib;odbc32.lib;odbccp32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;$(SolutionDir)3rdParty/PUL/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -118,6 +118,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>libc.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Deploy\*.*" "$(OutputPath)"</Command>
