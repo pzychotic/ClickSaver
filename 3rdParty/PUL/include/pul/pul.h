@@ -38,6 +38,13 @@ enum
 	PUFRAME_INFOBOX
 };
 
+/* Font types */
+enum
+{
+	PUFONT_NORMAL,
+	PUFONT_FIXED
+};
+
 /* Mouse event */
 typedef struct
 {

@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\classes">
+      <UniqueIdentifier>{ae984d43-86b7-4f50-bf1d-f382b76294c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\include">
+      <UniqueIdentifier>{184e771a-ba23-41e5-b216-66bafb7a992b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32">
+      <UniqueIdentifier>{bc9b1c62-8737-48c6-b52f-c4d28bfc7d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Includes">
+      <UniqueIdentifier>{62378110-f6dc-4d44-a00f-57ae63ab4e30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\appmessage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collection.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\draw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\frame.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\globals.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\icon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\oo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pul.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\baseclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\checkboxclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\comboboxclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\containerclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\controlclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\foldclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\groupclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\horgroupclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\imageclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\listclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\listviewclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\registerclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\scrollingclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\sliderclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\spacerclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\tableclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\textareaclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\textclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\textentryclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\vergroupclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\classes\windowclass.c">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32\w32draw.c">
+      <Filter>Source Files\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32\win32.c">
+      <Filter>Source Files\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\classes\baseclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\checkboxclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\comboboxclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\containerclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\controlclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\foldclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\groupclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\horgroupclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\imageclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\listclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\listviewclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\registerclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\scrollingclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\sliderclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\spacerclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\tableclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\textareaclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\textclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\textentryclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\vergroupclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\classes\windowclass.h">
+      <Filter>Source Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\collection.h">
+      <Filter>Source Files\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\globals.h">
+      <Filter>Source Files\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\pul.h">
+      <Filter>Source Files\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\win32\win32.h">
+      <Filter>Source Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\classes.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\collection.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\list.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\log.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\macros.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\notification.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\oo.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\pul.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pul\types.h">
+      <Filter>Public Includes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

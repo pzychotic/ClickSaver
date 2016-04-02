@@ -65,9 +65,9 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>zlibrel.lib;libdb40.lib;PULd.lib;odbc32.lib;odbccp32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibrel.lib;libdb40.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;$(SolutionDir)3rdParty/PUL/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -108,9 +108,9 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>zlibrel.lib;libdb40.lib;PUL.lib;odbc32.lib;odbccp32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibrel.lib;libdb40.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;$(SolutionDir)3rdParty/PUL/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty/zlib/lib;$(SolutionDir)3rdParty/BerkeleyDB;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -147,6 +147,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ClickSaver.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3rdParty\PUL\PUL.vcxproj">
+      <Project>{004252e0-c57f-468d-a422-c4fe405903fa}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

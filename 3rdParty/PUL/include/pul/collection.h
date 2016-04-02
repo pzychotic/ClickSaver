@@ -15,6 +15,7 @@ typedef struct
 } pusObjectCollection;
 
 pusObjectCollection*	puCreateObjectCollection( PUU32* _pCollectionDef );
+int						puAppendObjectCollection( pusObjectCollection* _pCol, PUU32* _pCollectionDef );
 void					puDeleteObjectCollection( pusObjectCollection* _pCollection );
 PULID					puGetObjectFromCollection( pusObjectCollection* _pCollection, PUU32 _ObjId );
 
