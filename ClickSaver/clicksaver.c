@@ -977,6 +977,7 @@ void ImportSettings( char* filename )
             // If the resulting string isn't empty, add it to the list
             if( *pString )
             {
+                puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_NEWRECORD, 0, 0 );
                 puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_ADDRECORD, 0, 0 );
                 puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_SETFIELDVAL, (PUU32)pString, 0 );
             }
