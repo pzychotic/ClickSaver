@@ -54,14 +54,15 @@ END
 // remains consistent on all systems.
 IDI_ICON1               ICON                    "cs.ico"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,4,1,0
- PRODUCTVERSION 2,4,1,0
+ FILEVERSION 2,5,0,0
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -77,12 +78,12 @@ BEGIN
         BLOCK "000904b0"
         BEGIN
             VALUE "FileDescription", "ClickSaver"
-            VALUE "FileVersion", "2.4.1.0"
+            VALUE "FileVersion", "2.5.0.0"
             VALUE "InternalName", "ClickSaver.exe"
-            VALUE "LegalCopyright", "Copyright (C) 2015"
+            VALUE "LegalCopyright", "Copyright (C) 2016"
             VALUE "OriginalFilename", "ClickSaver.exe"
             VALUE "ProductName", "ClickSaver"
-            VALUE "ProductVersion", "2.4.1.0"
+            VALUE "ProductVersion", "2.5.0.0"
         END
     END
     BLOCK "VarFileInfo"

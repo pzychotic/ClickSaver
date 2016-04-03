@@ -1,4 +1,4 @@
-ClickSaver 2.4.1
+ClickSaver 2.5.0
 ================
 
 Update by Uragon for the 18.1 Anarchy Online patch (database changes)
@@ -155,6 +155,9 @@ where you have put it.
 
 History
 -------
+2.5.0       - First public release by pzychotic
+            - Updated to VS2015
+            - Updated PUL to latest available version, now also built with VS2015
 2.4.1       - Updated so Detours will also work for WinXP, so the same executable can be used on all Windows versions
 2.4.0       - Updated for 18.5 for Win7+ by Darkbane
             - Switched hooking method to Microsoft Detours
