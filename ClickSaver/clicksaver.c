@@ -1355,7 +1355,7 @@ void WriteLog( const char* Format, ... )
 
 void WriteDebug( const char* txt )
 {
-    /**/
+#ifdef _DEBUG
     static FILE *fp = NULL;
     if( txt == NULL )
     {
@@ -1371,7 +1371,7 @@ void WriteDebug( const char* txt )
         fp = fopen( "clicksaver.debug", "a" );
     }
     fprintf( fp, "%s", txt );
-    /**/
+#endif // _DEBUG
 }
 
 
