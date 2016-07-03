@@ -982,9 +982,10 @@ void ImportSettings( char* filename )
                 puDoMethod( ( mode == ISM_ITEMWATCH ? g_ItemWatchList : g_LocWatchList ), PUM_TABLE_SETFIELDVAL, (PUU32)pString, 0 );
             }
             break;
-
         }
     }
+
+    fclose( fp );
 }
 
 
