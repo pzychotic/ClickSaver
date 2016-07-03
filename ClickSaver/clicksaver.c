@@ -819,7 +819,7 @@ void ImportSettings( char* filename )
                     break;
 
                 case CFG_WINDOWX:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     if( Val < 16384 )
                     {
                         puSetAttribute( g_MainWin, PUA_WINDOW_XPOS, Val );
@@ -827,7 +827,7 @@ void ImportSettings( char* filename )
                     break;
 
                 case CFG_WINDOWY:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     if( Val < 16384 )
                     {
                         puSetAttribute( g_MainWin, PUA_WINDOW_YPOS, Val );
@@ -835,57 +835,57 @@ void ImportSettings( char* filename )
                     break;
 
                 case CFG_WINDOWWIDTH:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( g_MainWin, PUA_WINDOW_WIDTH, Val );
                     break;
 
                 case CFG_STARTMINIMIZED:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_WATCHMSGBOX:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_BUYINGAGENTSHOWHELP:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_SOUNDS:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_MOUSEMOVE:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_EXPAND:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_LOG:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTITEM:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTLOC:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
                 case CFG_ALERTTYPE:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( Val ? TRUE : FALSE ) );
                     break;
 
@@ -895,12 +895,12 @@ void ImportSettings( char* filename )
                     break;
 
                 case CFG_BUYINGAGENTHIDE:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTFOLD ), PUA_FOLD_FOLDED, Val );
                     break;
 
                 case CFG_MISSIONTYPES:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
@@ -909,7 +909,7 @@ void ImportSettings( char* filename )
                     break;
 
                 case CFG_HIGHLIGHTOPTS:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
@@ -922,19 +922,19 @@ void ImportSettings( char* filename )
                 case CFG_SLIDER_PHYS_MYST:
                 case CFG_SLIDER_HEADON_STEALTH:
                 case CFG_SLIDER_MONEY_XP:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD + ( Id - CFG_SLIDER_EASY_HARD ) ), PUA_TEXTENTRY_VALUE, Val );
                     break;
 
                 case CFG_BUYMOD:
-                    sscanf( Value, "%d", &Val );
+                    sscanf( Value, "%u", &Val );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD ), PUA_TEXTENTRY_VALUE, Val );
                     break;
 
                 case CFG_ITEMVALUE:
                 {
                     PUU32 a, b, c, d;
-                    sscanf( Value, "%d::%d::%d::%d", &a, &b, &c, &d );
+                    sscanf( Value, "%u::%u::%u::%u", &a, &b, &c, &d );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE ), PUA_TEXTENTRY_VALUE, a );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL ), PUA_TEXTENTRY_VALUE, b );
                     puSetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE ), PUA_CHECKBOX_CHECKED, c );
@@ -1017,40 +1017,40 @@ void ExportSettings( char* filename )
     puDoMethod( g_MainWin, PUM_WINDOW_GETRECT, (PUU32)&Rect, 0 );
     fprintf( fp, "WINDOWX::%d\nWINDOWY::%d\nWINDOWWIDTH::%d\n", Rect.X, Rect.Y, Rect.Width );
 
-    fprintf( fp, "STARTMINIMIZED::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "STARTMINIMIZED::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_STARTMIN_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "WATCHMSGBOX::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "WATCHMSGBOX::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MSGBOX_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "BUYINGAGENTSHOWHELP::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "BUYINGAGENTSHOWHELP::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BAINFO_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "SOUNDS::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "SOUNDS::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SOUNDS_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "EXPAND::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "EXPAND::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_EXPAND_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "MOUSEMOVE::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "MOUSEMOVE::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_MOUSEMOVE_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "LOG::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "LOG::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_LOG_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "ALERTITEM::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "ALERTITEM::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTITEM_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "ALERTLOC::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "ALERTLOC::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTLOC_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "ALERTTYPE::%d\n",
-             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED ) ? 1 : 0 );
+    fprintf( fp, "ALERTTYPE::%u\n",
+             puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ALERTTYPE_CB ), PUA_CHECKBOX_CHECKED ) );
 
-    fprintf( fp, "BUYINGAGENTMAXTRIES::%d\n",
+    fprintf( fp, "BUYINGAGENTMAXTRIES::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTTRIES ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "BUYINGAGENTHIDE::%d\n",
+    fprintf( fp, "BUYINGAGENTHIDE::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_BUYINGAGENTFOLD ), PUA_FOLD_FOLDED ) );
 
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x01;
@@ -1059,40 +1059,40 @@ void ExportSettings( char* filename )
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x08;
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x10;
 
-    fprintf( fp, "MISHTYPES::%d\n", Val );
+    fprintf( fp, "MISHTYPES::%u\n", Val );
 
     Val = 0;
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x01;
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x02;
     if( puGetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED ) ) Val |= 0x04;
 
-    fprintf( fp, "HIGHLIGHTOPTS::%d\n", Val );
+    fprintf( fp, "HIGHLIGHTOPTS::%u\n", Val );
 
-    fprintf( fp, "SLIDER_EASY_HARD::%d\n",
+    fprintf( fp, "SLIDER_EASY_HARD::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_EASY_HARD ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_GOOD_BAD::%d\n",
+    fprintf( fp, "SLIDER_GOOD_BAD::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_GOOD_BAD ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_ORDER_CHAOS::%d\n",
+    fprintf( fp, "SLIDER_ORDER_CHAOS::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_ORDER_CHAOS ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_OPEN_HIDDEN::%d\n",
+    fprintf( fp, "SLIDER_OPEN_HIDDEN::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_OPEN_HIDDEN ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_PHYS_MYST::%d\n",
+    fprintf( fp, "SLIDER_PHYS_MYST::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_PHYS_MYST ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_HEADON_STEALTH::%d\n",
+    fprintf( fp, "SLIDER_HEADON_STEALTH::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_HEADON_STEALTH ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "SLIDER_MONEY_XP::%d\n",
+    fprintf( fp, "SLIDER_MONEY_XP::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_SLIDER_MONEY_XP ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "BUYMOD::%d\n",
+    fprintf( fp, "BUYMOD::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_BUYMOD ), PUA_TEXTENTRY_VALUE ) );
 
-    fprintf( fp, "ITEMVALUE::%d::%d::%d::%d\n",
+    fprintf( fp, "ITEMVALUE::%u::%u::%u::%u\n",
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_SINGLE ), PUA_TEXTENTRY_VALUE ),
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_TOTAL ), PUA_TEXTENTRY_VALUE ),
              puGetAttribute( puGetObjectFromCollection( g_pCol, CS_ITEMVALUE_MSINGLE ), PUA_CHECKBOX_CHECKED ),

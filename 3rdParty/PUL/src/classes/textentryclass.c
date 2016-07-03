@@ -242,7 +242,7 @@ PUU32 puTextEntrySetAttr( PULID _Object, PULID _Class, void* _pData, PUU32 _Attr
 				switch( pData->Format )
 				{
 					case PUFORMAT_DECIMAL:
-						sprintf( Tmp, "%d", pData->Value );
+						sprintf( Tmp, "%u", pData->Value );
 						break;
 
 					case PUFORMAT_HEX:

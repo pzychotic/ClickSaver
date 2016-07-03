@@ -612,9 +612,9 @@ PUU32 MissionParse( PULID _Object, MissionClassData* _pData, PUU8* _pMissionData
         //}
 
         // Display cash
-        sprintf( _pData->CashStr, "%d", Cash );
+        sprintf( _pData->CashStr, "%u", Cash );
         puSetAttribute( puGetObjectFromCollection( _pData->pCol, CASH ), PUA_TEXT_STRING, (PUU32)_pData->CashStr );
-        sprintf( _pData->XPStr, "%d", XP );
+        sprintf( _pData->XPStr, "%u", XP );
         puSetAttribute( puGetObjectFromCollection( _pData->pCol, MISHXP ), PUA_TEXT_STRING, (PUU32)_pData->XPStr );
     }
 
@@ -767,7 +767,7 @@ PUU32 ShowItem( MissionClassData* _pData, Item* _pItem, PUU32 _ObjId, PUU32 _Val
         WriteLog( "reward\t%u\t%u\t%u\t%s\n", ItemKey1, ItemKey2, QL, _pData->Reward.pName );
 
         // Display item name and ql
-        sprintf( TempStr, "QL%d %s", QL, _pData->Reward.pName );
+        sprintf( TempStr, "QL%u %s", QL, _pData->Reward.pName );
         bItemFound = SetAndSearch( TempStr, puGetObjectFromCollection(
             _pData->pCol, _ObjId ), g_ItemWatchList );
 

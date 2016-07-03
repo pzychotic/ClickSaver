@@ -262,7 +262,7 @@ int ImportRecords( PUU32 _Type )
     }
 
     free( pBuffer );
-    sprintf( ps, "Recorded %d records, %d total size\n", numItems, numBytes );
+    sprintf( ps, "Recorded %u records, %u total size\n", numItems, numBytes );
     WriteDebug( ps );
 
     return TRUE;
