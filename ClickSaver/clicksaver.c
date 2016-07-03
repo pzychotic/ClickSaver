@@ -901,18 +901,18 @@ void ImportSettings( char* filename )
 
                 case CFG_MISSIONTYPES:
                     sscanf( Value, "%u", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x08 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x10 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEREPAIR_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x01 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPERETURN_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x02 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDP_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x04 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEFINDI_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x08 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_TYPEASS_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x10 ) ? TRUE : FALSE ) );
                     break;
 
                 case CFG_HIGHLIGHTOPTS:
                     sscanf( Value, "%u", &Val );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x01 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x02 ? TRUE : FALSE ) );
-                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( Val & 0x04 ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTITEM_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x01 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTLOC_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x02 ) ? TRUE : FALSE ) );
+                    puSetAttribute( puGetObjectFromCollection( g_pCol, CS_HIGHLIGHTTYPE_CB ), PUA_CHECKBOX_CHECKED, ( ( Val & 0x04 ) ? TRUE : FALSE ) );
                     break;
 
                 case CFG_SLIDER_EASY_HARD:
