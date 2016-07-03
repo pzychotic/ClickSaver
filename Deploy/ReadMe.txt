@@ -1,4 +1,4 @@
-ClickSaver 2.5.0
+ClickSaver 2.5.1
 ================
 
 Update by Uragon for the 18.1 Anarchy Online patch (database changes)
@@ -155,6 +155,10 @@ where you have put it.
 
 History
 -------
+2.5.1       - Database won't be deleted until the new one is correctly created
+            - Fixed file handle leak
+            - Some minor fixes
+            - Binaries build with VS 2015 Update 3
 2.5.0       - First public release by pzychotic
             - Updated to VS2015
             - Updated PUL to latest available version, now also built with VS2015
