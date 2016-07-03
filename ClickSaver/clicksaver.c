@@ -245,10 +245,6 @@ int main( int argc, char** argv )
             {
                 puSetAttribute( puGetObjectFromCollection( g_pCol, CS_CREATINGDBMSGBOX ), PUA_WINDOW_OPENED, FALSE );
 
-                // Delete the database in case it was partly created,
-                // so we're not using a partial database on next
-                // execution.
-                DeleteFile( "AODatabase.bdb" );
                 g_pDB = NULL;   // It has been already closed by createlocaldatabase
 
                 DisplayErrorMessage( "Failed to create local database.", FALSE );
