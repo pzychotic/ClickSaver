@@ -56,7 +56,6 @@ int CreateLocalDatabase()
     DeleteFile( "ResourceDatabase.dat" );
 
     // Delete old database
-    DeleteFile( "AODatabase.bdb" );
     DeleteFile( "tmp.bdb" );
 
     // Open AO's ctree databasse
@@ -123,6 +122,7 @@ int CreateLocalDatabase()
     g_pDB->close( g_pDB, 0 );
     ReleaseAODatabase();
 
+    DeleteFile( "AODatabase.bdb" );
     rename( "tmp.bdb", "AODatabase.bdb" );
 
     return TRUE;
@@ -196,7 +196,7 @@ int ImportRecords( PUU32 _Type )
             PUU8 *a_xDataPtr = a_xData;
             // Reducing size of database here...
             /* Set ptr to first slot */
-            a_xDataPtr = a_xData + 0xc; // + 0x24;
+            a_xDataPtr += 0xc; // + 0x24;
             memset( &sItem, 0, sizeof( sItem ) );
             /* Process the slots we require */
             while( a_xDataPtr + 8 <= a_xData + Size )
