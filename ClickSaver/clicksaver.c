@@ -158,8 +158,6 @@ int main( int argc, char** argv )
     }
 
     g_MainWin = puGetObjectFromCollection( g_pCol, CS_MAIN_WINDOW );
-    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon( NULL, MAKEINTRESOURCE( IDI_ICON1 ) ) );
-    SendMessage( (HWND)g_MainWin, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon( NULL, MAKEINTRESOURCE( IDI_ICON1 ) ) );
     g_ItemWatchList = puGetObjectFromCollection( g_pCol, CS_ITEMWATCH_LIST );
     g_LocWatchList = puGetObjectFromCollection( g_pCol, CS_LOCWATCH_LIST );
 
@@ -307,6 +305,14 @@ int main( int argc, char** argv )
     MissionControls[ 4 ] = puGetObjectFromCollection( g_pCol, CS_MISSION5 );
     //puSetAttribute( puGetObjectFromCollection( g_pCol, CS_OPTIONSFOLD3 ), PUA_FOLD_FOLDED, TRUE);
     puSetAttribute( g_MainWin, PUA_WINDOW_OPENED, TRUE );
+
+    HICON hIcon = LoadIcon( GetModuleHandle( NULL ), MAKEINTRESOURCE( IDI_ICON1 ) );
+    if( hIcon )
+    {
+        PUU32 uWindowHandle = puGetAttribute( g_MainWin, PUA_WINDOW_HANDLE );
+        SendMessage( (HWND)uWindowHandle, WM_SETICON, ICON_BIG,   (LPARAM)hIcon );
+        SendMessage( (HWND)uWindowHandle, WM_SETICON, ICON_SMALL, (LPARAM)hIcon );
+    }
 
     do
     {
