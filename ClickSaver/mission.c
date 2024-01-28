@@ -1178,7 +1178,7 @@ void GetMissionItem( MissionItem* _pMissionItem, PUU32 _ItemKey1, PUU32
         else
         {
             strcpy( _pMissionItem->pName, sItem2.pName );
-            _pMissionItem->IconKey = sItem1.IconKey;
+            _pMissionItem->IconKey = sItem2.IconKey;
         }
 
         if( ( sItem2.QL - sItem1.QL ) == 0 )
