@@ -51,7 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef __CLICKSAVER_H__
 #define __CLICKSAVER_H__
 
-#define CS_VERSION "2.5.1"
+#define CS_VERSION "2.5.2"
 
 #include "mission.h"
 
