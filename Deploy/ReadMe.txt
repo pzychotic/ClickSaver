@@ -1,4 +1,4 @@
-ClickSaver 2.5.2
+ClickSaver 2.5.3
 ================
 
 Update by Uragon for the 18.1 Anarchy Online patch (database changes)
@@ -155,6 +155,7 @@ where you have put it.
 
 History
 -------
+2.5.3       - Updated Microsoft Detours to v4.0.1
 2.5.2       - Fixed application window icon
             - Fixed wrong item icon in mission dialog
             - Binaries build with VS2022 (toolset v141_xp)

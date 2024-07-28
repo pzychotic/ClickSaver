@@ -21,7 +21,7 @@ From what I could gather these were the official places/developers you could get
   - [Homepage](http://clicksaver.notumwars.com) (down)
 
 * Covenant
-  - [Homepage](http://www.halorn.com/clicksaver.html)
+  - [Homepage](http://www.halorn.com/clicksaver.html) (down)
 
 * Kimi
   - [Homepage](http://arpa3.net/ao/clicksaver.html)
