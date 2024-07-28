@@ -7,14 +7,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="detoured.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="detours.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="creatwth.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -24,11 +16,37 @@
     <ClCompile Include="disasm.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="disolarm.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="disolarm64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="disolia64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="disolx64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="disolx86.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
     <ClCompile Include="image.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="modules.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="uimports.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="detours.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="detver.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
